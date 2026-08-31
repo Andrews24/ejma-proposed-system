@@ -1,0 +1,1825 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Demonstration website prepared by Andrastack for the Ejisu Municipal Assembly, Ashanti Region, Ghana.">
+<title>Ejisu Municipal Assembly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --forest:#14493A; --forest-2:#0E3629; --forest-soft:#E4EDE7;
+  --gold:#9C6F1C; --gold-2:#B8862B; --gold-soft:#F5EDDC;
+  --clay:#8E3E27; --clay-soft:#F6E7E1;
+  --paper:#F4F6F3; --surface:#FFFFFF; --surface-2:#EAEFEA; --surface-3:#DFE7E0;
+  --line:#D2DCD4; --line-soft:#E4EAE5;
+  --text:#171E19; --text-2:#3C4941; --muted:#5F6E64;
+  --ok:#1F6B4B; --warn:#8A6212; --crit:#963224;
+  --shadow:0 1px 2px rgba(20,35,28,.05), 0 8px 24px -12px rgba(20,35,28,.16);
+  --shadow-lg:0 2px 4px rgba(20,35,28,.05), 0 24px 48px -20px rgba(20,35,28,.24);
+  --r:4px; --r-lg:8px;
+  --f-display:"Fraunces","Iowan Old Style",Georgia,serif;
+  --f-body:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --wrap:1200px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --forest:#4E9C7F; --forest-2:#6DBA9B; --forest-soft:#152720;
+    --gold:#D2A44B; --gold-2:#E0B865; --gold-soft:#26200F;
+    --clay:#D2765A; --clay-soft:#2A1712;
+    --paper:#0C1210; --surface:#131B16; --surface-2:#19231D; --surface-3:#212D25;
+    --line:#27332B; --line-soft:#1E2822;
+    --text:#E5ECE6; --text-2:#BCC9C0; --muted:#8FA096;
+    --ok:#57B486; --warn:#D8A73F; --crit:#E08472;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    --shadow-lg:0 2px 4px rgba(0,0,0,.4), 0 24px 48px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --forest:#4E9C7F; --forest-2:#6DBA9B; --forest-soft:#152720;
+  --gold:#D2A44B; --gold-2:#E0B865; --gold-soft:#26200F;
+  --clay:#D2765A; --clay-soft:#2A1712;
+  --paper:#0C1210; --surface:#131B16; --surface-2:#19231D; --surface-3:#212D25;
+  --line:#27332B; --line-soft:#1E2822;
+  --text:#E5ECE6; --text-2:#BCC9C0; --muted:#8FA096;
+  --ok:#57B486; --warn:#D8A73F; --crit:#E08472;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lg:0 2px 4px rgba(0,0,0,.4), 0 24px 48px -20px rgba(0,0,0,.7);
+}
+
+/* ============ BASE ============ */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.012em}
+p{margin:0}
+a{color:var(--forest);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px;border-radius:2px}
+img,svg,canvas{max-width:100%;display:block}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+[hidden]{display:none!important}
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:24px}
+.mono{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:500}
+.stack{display:flex;flex-direction:column}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px;top:0;background:var(--forest);color:#fff;padding:10px 16px;z-index:200}
+.skip:focus{left:8px;top:8px}
+
+/* ============ KENTE RULE ============ */
+.kente-rule{height:5px;width:100%;
+  background:repeating-linear-gradient(90deg,
+    var(--gold-2) 0 26px, var(--clay) 26px 38px, var(--forest) 38px 72px,
+    var(--gold) 72px 80px, var(--forest-2) 80px 96px);
+  opacity:.9}
+
+/* ============ BANNERS / HEADER ============ */
+.demo-bar{background:#8E3E27;color:#FBEDE8;font-size:.8rem;line-height:1.45}
+.demo-bar strong,.demo-bar button{color:#fff}
+.demo-bar .wrap{display:flex;gap:14px;align-items:flex-start;padding-block:9px}
+.demo-bar strong{font-weight:700;letter-spacing:.02em}
+.demo-bar button{color:#fff;opacity:.8;margin-left:auto;flex:none;padding:0 4px;font-size:1.1rem;line-height:1}
+.demo-bar button:hover{opacity:1}
+
+.gov-bar{background:var(--forest-2);color:#DCE9E1;font-size:.76rem}
+:root[data-theme="dark"] .gov-bar,
+:root:not([data-theme="light"]) .gov-bar{}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gov-bar{background:#0B1712}}
+.gov-bar .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;padding-block:7px}
+.gov-bar a{color:#DCE9E1}
+.gov-bar .flagdot{width:9px;height:9px;border-radius:50%;background:var(--gold-2);flex:none;box-shadow:0 0 0 3px rgba(184,134,43,.2)}
+.gov-bar .right{margin-left:auto;display:flex;gap:18px;align-items:center}
+
+header.site{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}
+.masthead{display:flex;align-items:center;gap:16px;padding-block:14px}
+.crest{width:52px;height:58px;flex:none}
+.wordmark{min-width:0;flex:1 1 auto}
+.wordmark .name{font-family:var(--f-display);font-size:1.32rem;font-weight:700;letter-spacing:-.02em;color:var(--text);line-height:1.1}
+.wordmark .sub{font-size:.72rem;color:var(--muted);letter-spacing:.11em;text-transform:uppercase;font-weight:600;margin-top:3px}
+.mast-tools{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+@media(max-width:660px){
+  .masthead{gap:11px;padding-block:11px}
+  .crest{width:40px;height:45px}
+  .wordmark .name{font-size:1.02rem}
+  .wordmark .sub{font-size:.63rem;letter-spacing:.07em}
+  .mast-tools .btn{display:none}
+  .gov-bar .right{display:none}
+  .demo-bar{font-size:.745rem}
+  .hero .wrap{padding-block:52px 48px}
+}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:var(--r);color:var(--text-2);background:var(--surface)}
+.icon-btn:hover{border-color:var(--forest);color:var(--forest)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r);font-weight:600;font-size:.9rem;border:1px solid transparent;transition:background .15s,border-color .15s,color .15s}
+.btn:hover{text-decoration:none}
+.btn-primary{background:var(--forest);color:#fff}
+.btn-primary:hover{background:var(--forest-2)}
+:root[data-theme="dark"] .btn-primary,
+:root:not([data-theme="light"]) .btn-primary{color:#08120E}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn-primary{color:#fff}}
+:root[data-theme="light"] .btn-primary{color:#fff}
+.btn-ghost{border-color:var(--line);color:var(--text);background:var(--surface)}
+.btn-ghost:hover{border-color:var(--forest);color:var(--forest)}
+.btn-gold{background:var(--gold);color:#fff}
+:root[data-theme="dark"] .btn-gold,:root:not([data-theme="light"]) .btn-gold{color:#1A1204}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn-gold{color:#fff}}
+:root[data-theme="light"] .btn-gold{color:#fff}
+
+/* NAV */
+nav.main{border-top:1px solid var(--line-soft);background:var(--surface)}
+nav.main .wrap{display:flex;gap:2px;align-items:stretch;flex-wrap:wrap}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:6px;padding:13px 15px;font-size:.905rem;font-weight:600;color:var(--text-2);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+.nav-link:hover{color:var(--forest);text-decoration:none;background:var(--surface-2)}
+.nav-item.active>.nav-link{color:var(--forest);border-bottom-color:var(--gold-2)}
+.nav-link svg{width:11px;height:11px;opacity:.6;transition:transform .18s}
+.nav-item[data-open="1"] .nav-link svg{transform:rotate(180deg)}
+.dropdown{position:absolute;top:100%;left:0;min-width:274px;background:var(--surface);border:1px solid var(--line);border-radius:0 0 var(--r-lg) var(--r-lg);box-shadow:var(--shadow-lg);padding:8px;z-index:60;display:none}
+.nav-item[data-open="1"] .dropdown{display:block}
+.dropdown a{display:block;padding:9px 12px;border-radius:var(--r);font-size:.895rem;color:var(--text-2);font-weight:500}
+.dropdown a:hover{background:var(--forest-soft);color:var(--forest);text-decoration:none}
+.dropdown a small{display:block;font-size:.76rem;color:var(--muted);font-weight:400;margin-top:1px}
+.burger{display:none}
+@media(max-width:940px){
+  .burger{display:grid}
+  nav.main .wrap{display:none;flex-direction:column;padding-block:8px}
+  nav.main.open .wrap{display:flex}
+  .dropdown{position:static;display:block;border:0;box-shadow:none;padding:0 0 6px 14px;min-width:0;background:none}
+  .nav-link{border-bottom:0;border-left:3px solid transparent}
+  .nav-item.active>.nav-link{border-left-color:var(--gold-2)}
+  .nav-link svg{display:none}
+}
+
+/* SEARCH SHEET */
+.search-sheet{border-top:1px solid var(--line-soft);background:var(--surface-2);padding:16px 0}
+.search-sheet form{display:flex;gap:8px;max-width:640px}
+.search-sheet input{flex:1;padding:11px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--text);font:inherit;font-size:.95rem}
+.search-sheet input:focus{outline:2px solid var(--gold-2);outline-offset:-1px;border-color:transparent}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;background:var(--forest-2);color:#EAF2ED;isolation:isolate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2;opacity:.5}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(105deg,rgba(9,32,24,.95) 0%,rgba(9,32,24,.86) 42%,rgba(9,32,24,.42) 100%)}
+.hero .wrap{padding-block:86px 78px;max-width:1200px}
+.hero-eyebrow{color:var(--gold-2);display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.hero-eyebrow::before{content:"";width:34px;height:2px;background:var(--gold-2);flex:none}
+.hero h1{font-size:clamp(2.3rem,5.2vw,3.7rem);color:#fff;max-width:16ch;font-weight:600;letter-spacing:-.025em}
+.hero p.lead{margin-top:20px;max-width:56ch;font-size:1.09rem;color:#C6D8CD;line-height:1.62}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .btn-ghost{border-color:rgba(255,255,255,.32);color:#fff;background:transparent}
+.hero .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:#fff;color:#fff}
+.hero .btn-gold{color:#1A1204}
+
+/* stat strip */
+.statstrip{background:var(--surface);border-bottom:1px solid var(--line)}
+.statstrip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:22px 22px 22px 0;border-right:1px solid var(--line-soft)}
+.stat:first-child{}
+.stat:last-child{border-right:0}
+.stat .n{font-family:var(--f-display);font-size:1.95rem;font-weight:600;color:var(--forest);font-variant-numeric:tabular-nums;line-height:1}
+.stat .l{font-size:.78rem;color:var(--muted);margin-top:7px;letter-spacing:.05em;text-transform:uppercase;font-weight:600}
+.stat .s{font-size:.74rem;color:var(--muted);opacity:.8;margin-top:2px}
+@media(max-width:800px){.statstrip .wrap{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line-soft)}.stat:nth-child(2n){border-right:0}}
+
+/* ============ LAYOUT PRIMITIVES ============ */
+main{display:block;min-height:60vh}
+section.band{padding-block:60px}
+section.band.alt{background:var(--surface-2);border-block:1px solid var(--line-soft)}
+.sec-head{margin-bottom:30px;max-width:70ch}
+.sec-head .eyebrow{color:var(--gold);margin-bottom:9px;display:block}
+.sec-head h2{font-size:clamp(1.55rem,3vw,2.1rem)}
+.sec-head p{color:var(--muted);margin-top:11px;font-size:1.01rem;max-width:64ch}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;transition:border-color .15s,box-shadow .15s,transform .15s}
+a.card:hover{border-color:var(--forest);box-shadow:var(--shadow);text-decoration:none;transform:translateY(-2px)}
+.card h3{font-size:1.06rem;margin-bottom:7px}
+.card p{color:var(--muted);font-size:.9rem;line-height:1.55}
+
+/* service tiles */
+.tile{display:flex;gap:15px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--gold-2);border-radius:var(--r);padding:18px 18px 18px 17px}
+a.tile:hover{border-color:var(--line);border-left-color:var(--forest);background:var(--forest-soft);text-decoration:none}
+.tile .ic{width:34px;height:34px;flex:none;color:var(--forest)}
+.tile b{display:block;font-size:.97rem;font-weight:600;color:var(--text);font-family:var(--f-display)}
+.tile span{display:block;font-size:.83rem;color:var(--muted);margin-top:3px;line-height:1.5}
+
+/* page header */
+.page-head{background:var(--surface);border-bottom:1px solid var(--line);padding-block:34px 30px}
+.crumbs{display:flex;gap:9px;align-items:center;color:var(--muted);font-size:.79rem;margin-bottom:13px;flex-wrap:wrap}
+.crumbs a{color:var(--muted)}
+.crumbs span{opacity:.5}
+.page-head h1{font-size:clamp(1.85rem,4vw,2.65rem);max-width:22ch}
+.page-head .kicker{color:var(--muted);margin-top:12px;max-width:62ch;font-size:1.02rem}
+
+/* two-col page */
+.pagegrid{display:grid;grid-template-columns:1fr 300px;gap:44px;align-items:start;padding-block:44px}
+@media(max-width:940px){.pagegrid{grid-template-columns:1fr;gap:32px}}
+.prose{max-width:68ch}
+.prose h2{font-size:1.5rem;margin-top:36px;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.prose h2:first-child{margin-top:0}
+.prose h3{font-size:1.12rem;margin-top:26px;margin-bottom:8px}
+.prose p{margin-bottom:14px;color:var(--text-2)}
+.prose ul{margin:0 0 16px;padding-left:20px;color:var(--text-2)}
+.prose li{margin-bottom:7px}
+.prose li::marker{color:var(--gold-2)}
+aside .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;margin-bottom:18px}
+aside .box h4{font-size:.79rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;font-family:var(--f-body);font-weight:700}
+aside .box ul{list-style:none;margin:0;padding:0}
+aside .box li{padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem}
+aside .box li:last-child{border-bottom:0;padding-bottom:0}
+aside .box .kv{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+aside .box .kv:last-child{border-bottom:0}
+aside .box .kv b{font-weight:600;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+aside .box .kv span{color:var(--muted)}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.885rem;min-width:560px}
+th{background:var(--surface-2);text-align:left;padding:12px 15px;font-weight:700;font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:var(--text-2);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:13px 15px;border-bottom:1px solid var(--line-soft);color:var(--text-2);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:100px;font-size:.735rem;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.pill.ok{background:var(--forest-soft);color:var(--ok)}
+.pill.warn{background:var(--gold-soft);color:var(--warn)}
+.pill.crit{background:var(--clay-soft);color:var(--crit)}
+.pill.info{background:var(--surface-3);color:var(--text-2)}
+.tag{display:inline-block;padding:2px 9px;border:1px solid var(--line);border-radius:100px;font-size:.72rem;color:var(--muted);font-weight:600;letter-spacing:.03em}
+
+/* news */
+.news-item{display:grid;grid-template-columns:168px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line-soft);align-items:start}
+.news-item:last-child{border-bottom:0}
+.news-thumb{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;line-height:0;background:var(--surface-2)}
+.news-thumb svg{width:100%;height:100%;display:block}
+.datechip{position:absolute;left:8px;top:8px;background:rgba(255,255,255,.94);border-radius:var(--r);text-align:center;padding:6px 9px;box-shadow:0 2px 8px rgba(10,25,18,.28)}
+.datechip .d{font-family:var(--f-display);font-size:1.16rem;font-weight:700;color:#14493A;line-height:1}
+.datechip .m{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#5F6E64;margin-top:2px;font-weight:700}
+.news-item h3{font-size:1.06rem;margin-bottom:6px}
+.news-item p{color:var(--muted);font-size:.9rem}
+.news-item .meta{display:flex;gap:10px;align-items:center;margin-top:9px;flex-wrap:wrap}
+@media(max-width:560px){.news-item{grid-template-columns:1fr;gap:12px}.news-thumb{aspect-ratio:16/9}}
+
+/* doc rows */
+.docrow{display:flex;gap:15px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:9px}
+.docrow:hover{border-color:var(--forest)}
+.docrow .ft{width:38px;height:44px;flex:none;display:grid;place-items:center;background:var(--clay-soft);color:var(--clay);border-radius:3px;font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.05em}
+.docrow .info{min-width:0;flex:1}
+.docrow b{display:block;font-size:.94rem;font-weight:600;color:var(--text)}
+.docrow small{color:var(--muted);font-size:.78rem}
+.docrow .dl{flex:none;color:var(--forest);font-weight:600;font-size:.84rem}
+
+/* person cards */
+.person{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.person .ph{aspect-ratio:4/3.4;background:
+  repeating-linear-gradient(135deg,var(--surface-2) 0 12px,var(--surface-3) 12px 24px);
+  display:grid;place-items:center;border-bottom:1px solid var(--line);position:relative}
+.person .ph span{font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600;text-align:center;padding:0 16px;line-height:1.5}
+.person .bd{padding:17px 18px}
+.person h3{font-size:1.02rem;color:var(--forest)}
+.person .role{font-size:.82rem;color:var(--muted);margin-top:4px}
+.person .placeholder{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:.78rem;color:var(--muted);line-height:1.5}
+
+/* forms */
+.formgrid{display:grid;gap:16px;grid-template-columns:repeat(2,1fr)}
+@media(max-width:620px){.formgrid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.83rem;font-weight:600;color:var(--text-2)}
+.field label .req{color:var(--clay)}
+.field input,.field select,.field textarea{padding:11px 13px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--text);font:inherit;font-size:.93rem;width:100%}
+.field textarea{min-height:120px;resize:vertical;font-family:var(--f-body)}
+.field small{color:var(--muted);font-size:.78rem}
+.notice{border-left:3px solid var(--gold-2);background:var(--gold-soft);padding:14px 17px;border-radius:0 var(--r) var(--r) 0;font-size:.89rem;color:var(--text-2);margin-bottom:20px}
+.notice b{color:var(--text)}
+.notice.green{border-left-color:var(--forest);background:var(--forest-soft)}
+
+/* bar chart */
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:grid;grid-template-columns:1fr 56px;gap:12px;align-items:center}
+.bar-row .lab{font-size:.85rem;color:var(--text-2)}
+.bar-track{height:9px;background:var(--surface-3);border-radius:100px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;border-radius:100px;transition:width .8s cubic-bezier(.22,1,.36,1)}
+.bar-row .val{font-family:var(--f-mono);font-size:.82rem;text-align:right;color:var(--text-2);font-variant-numeric:tabular-nums}
+
+/* photographs & illustrations */
+.photo{margin:0;position:relative;overflow:hidden;border-radius:var(--r-lg);background:var(--surface-2);line-height:0}
+.photo svg{width:100%;height:100%;display:block}
+.photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 14px 10px;font-size:.76rem;line-height:1.45;color:#fff;
+  background:linear-gradient(to bottom,rgba(8,20,15,0) 0%,rgba(8,20,15,.82) 62%);text-align:left}
+.photo.ratio-wide{aspect-ratio:21/8}
+.photo.ratio-16{aspect-ratio:16/9}
+.photo.ratio-4{aspect-ratio:4/3}
+.photo.square{border-radius:var(--r)}
+.photoband{display:flex;flex-direction:column;gap:14px}
+.photoband .row{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+@media(max-width:760px){.photoband .row{grid-template-columns:repeat(2,1fr)}}
+.imgnote{font-size:.79rem;color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:flex-start}
+.imgnote svg{width:14px;height:14px;flex:none;margin-top:3px;color:var(--gold)}
+
+/* quick strip on inner pages */
+.quickstrip{margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
+.qs-head{color:var(--gold);margin-bottom:14px}
+
+/* tourism cards */
+.tour{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.tour .art{aspect-ratio:16/9;position:relative;overflow:hidden}
+.tour .art svg{width:100%;height:100%;display:block}
+.tour .bd{padding:20px;flex:1;display:flex;flex-direction:column;gap:8px}
+.tour h3{font-size:1.14rem}
+.tour p{font-size:.9rem;color:var(--muted);line-height:1.58}
+.tour .foot{margin-top:auto;padding-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* zonal */
+.zonal{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:10px}
+.zonal .idx{width:34px;height:34px;border-radius:50%;background:var(--forest);color:#fff;display:grid;place-items:center;font-family:var(--f-mono);font-size:.8rem;font-weight:600;flex:none}
+:root[data-theme="dark"] .zonal .idx,:root:not([data-theme="light"]) .zonal .idx{color:#08120E}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .zonal .idx{color:#fff}}
+:root[data-theme="light"] .zonal .idx{color:#fff}
+.zonal b{font-size:1rem;font-family:var(--f-display);font-weight:600}
+.zonal small{display:block;color:var(--muted);font-size:.83rem;margin-top:2px}
+@media(max-width:620px){.zonal{grid-template-columns:auto 1fr}.zonal .n{grid-column:2}}
+
+/* footer */
+footer.site{background:var(--forest-2);color:#C3D6CA;margin-top:0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) footer.site{background:#0A1410}}
+:root[data-theme="dark"] footer.site{background:#0A1410}
+footer.site .wrap{padding-block:48px 0}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:36px}
+@media(max-width:860px){.foot-grid{grid-template-columns:repeat(2,1fr);gap:28px}}
+@media(max-width:520px){.foot-grid{grid-template-columns:1fr}}
+footer.site h4{font-family:var(--f-body);font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px;font-weight:700}
+footer.site ul{list-style:none;margin:0;padding:0}
+footer.site li{margin-bottom:9px;font-size:.885rem}
+footer.site a{color:#C3D6CA}
+footer.site a:hover{color:#fff}
+footer.site .about p{font-size:.885rem;line-height:1.65;color:#A9C0B2;max-width:38ch}
+.foot-crest{display:flex;gap:12px;align-items:center;margin-bottom:15px}
+.foot-crest .name{font-family:var(--f-display);color:#fff;font-size:1.06rem;font-weight:600;line-height:1.2}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.13);margin-top:38px;padding-block:20px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;font-size:.79rem;color:#96AE9F}
+.foot-bottom .right{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
+.andra{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:8px 14px;border-radius:100px;font-size:.79rem}
+.andra b{color:#fff}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="demo-bar" id="demoBar">
+  <div class="wrap">
+    <div><strong>Demonstration site.</strong> Prepared by Andrastack for the Ejisu Municipal Assembly to illustrate a proposed design. Structure and factual profile are drawn from public records; names, news items, project records and documents shown are illustrative placeholders and are not official publications of the Assembly.</div>
+    <button type="button" aria-label="Dismiss notice" onclick="document.getElementById('demoBar').hidden=true">&times;</button>
+  </div>
+</div>
+
+<div class="gov-bar">
+  <div class="wrap">
+    <span class="flagdot" aria-hidden="true"></span>
+    <span>Official website of the Ejisu Municipal Assembly &mdash; Republic of Ghana</span>
+    <div class="right">
+      <a href="#/contact">Right to Information</a>
+      <a href="#/contact">0322&nbsp;000&nbsp;000</a>
+      <a href="#/services">e-Services</a>
+    </div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap masthead">
+    <svg class="crest" viewBox="0 0 52 58" role="img" aria-label="Ejisu Municipal Assembly crest">
+      <defs>
+        <clipPath id="shield"><path d="M26 1 50 8v25c0 12-10 20-24 24C12 53 2 45 2 33V8Z"/></clipPath>
+      </defs>
+      <g clip-path="url(#shield)">
+        <rect x="0" y="0" width="52" height="58" fill="#14493A"/>
+        <rect x="0" y="0" width="52" height="12" fill="#0E3629"/>
+        <rect x="0" y="24" width="52" height="5" fill="#B8862B"/>
+        <rect x="0" y="30" width="52" height="3" fill="#8E3E27"/>
+        <rect x="0" y="40" width="52" height="18" fill="#0E3629"/>
+        <g fill="#B8862B">
+          <rect x="8" y="44" width="5" height="10"/><rect x="17" y="44" width="5" height="10"/>
+          <rect x="26" y="44" width="5" height="10"/><rect x="35" y="44" width="5" height="10"/>
+        </g>
+        <path d="M26 13l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6-5.5-5.4 7.6-1.1Z" fill="#F0D9A0"/>
+      </g>
+      <path d="M26 1 50 8v25c0 12-10 20-24 24C12 53 2 45 2 33V8Z" fill="none" stroke="#B8862B" stroke-width="2"/>
+    </svg>
+    <div class="wordmark">
+      <div class="name">Ejisu Municipal Assembly</div>
+      <div class="sub">Ashanti Region &middot; Ghana</div>
+    </div>
+    <div class="mast-tools">
+      <button class="icon-btn" id="searchBtn" aria-label="Search this site" aria-expanded="false">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch colour theme">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 13.5A8.5 8.5 0 0 1 10.5 4a8.5 8.5 0 1 0 9.5 9.5Z"/></svg>
+      </button>
+      <a class="btn btn-primary" href="#/issue" style="padding:9px 15px">Report an issue</a>
+      <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="main" id="mainNav" aria-label="Main"><div class="wrap" id="navWrap"></div></nav>
+  <div class="search-sheet" id="searchSheet" hidden>
+    <div class="wrap">
+      <form onsubmit="event.preventDefault();alert('Search is illustrative in this demonstration. The delivered site includes full-text search across pages, news, documents and projects.')">
+        <input type="search" placeholder="Search notices, documents, projects, departments&hellip;" aria-label="Search the site">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</header>
+<div class="kente-rule" aria-hidden="true"></div>
+
+<main id="main"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="about">
+        <div class="foot-crest">
+          <svg width="34" height="38" viewBox="0 0 52 58" aria-hidden="true">
+            <g clip-path="url(#shield)">
+              <rect x="0" y="0" width="52" height="58" fill="#14493A"/>
+              <rect x="0" y="24" width="52" height="5" fill="#B8862B"/>
+              <rect x="0" y="40" width="52" height="18" fill="#0E3629"/>
+              <path d="M26 13l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6-5.5-5.4 7.6-1.1Z" fill="#F0D9A0"/>
+            </g>
+            <path d="M26 1 50 8v25c0 12-10 20-24 24C12 53 2 45 2 33V8Z" fill="none" stroke="#B8862B" stroke-width="2"/>
+          </svg>
+          <div class="name">Ejisu Municipal<br>Assembly</div>
+        </div>
+        <p>Municipal Assembly Block, Ejisu, Ashanti Region.<br>P. O. Box 25, Ejisu.<br>Monday &ndash; Friday, 8:00&nbsp;a.m. &ndash; 5:00&nbsp;p.m.</p>
+      </div>
+      <div>
+        <h4>The Assembly</h4>
+        <ul>
+          <li><a href="#/about">About the Municipality</a></li>
+          <li><a href="#/leadership">Leadership</a></li>
+          <li><a href="#/departments">Departments &amp; Units</a></li>
+          <li><a href="#/zonal">Sub-District Structures</a></li>
+          <li><a href="#/news">News &amp; Notices</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#/services">e-Services</a></li>
+          <li><a href="#/issue">Report an Issue</a></li>
+          <li><a href="#/documents">Documents &amp; Downloads</a></li>
+          <li><a href="#/tenders">Procurement &amp; Tenders</a></li>
+          <li><a href="#/projects">Development Projects</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Discover</h4>
+        <ul>
+          <li><a href="#/tourism">Tourism &amp; Culture</a></li>
+          <li><a href="#/invest">Invest in Ejisu</a></li>
+          <li><a href="#/contact">Contact Us</a></li>
+          <li><a href="#/contact">Right to Information</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Ejisu Municipal Assembly. All rights reserved.</span>
+      <div class="right">
+        <span class="andra">Demonstration built by <b>Andrastack</b></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ==================== NAV MODEL ==================== */
+const NAV = [
+  {label:"Home", href:"#/"},
+  {label:"The Assembly", children:[
+    {label:"About the Municipality", href:"#/about", note:"Profile, vision, mandate and statistics"},
+    {label:"Leadership", href:"#/leadership", note:"MCE, Presiding Member, MCD and members"},
+    {label:"Departments & Units", href:"#/departments", note:"Fourteen departments and their mandates"},
+    {label:"Sub-District Structures", href:"#/zonal", note:"Five zonal councils and 28 electoral areas"},
+  ]},
+  {label:"Services", children:[
+    {label:"e-Services", href:"#/services", note:"Permits, rates, registrations and fees"},
+    {label:"Report an Issue", href:"#/issue", note:"Sanitation, roads, drains and street lights"},
+    {label:"Documents & Downloads", href:"#/documents", note:"Budgets, by-laws, reports and forms"},
+    {label:"Procurement & Tenders", href:"#/tenders", note:"Open tenders and awarded contracts"},
+  ]},
+  {label:"Development", children:[
+    {label:"Development Projects", href:"#/projects", note:"Project register by community and status"},
+    {label:"Invest in Ejisu", href:"#/invest", note:"Opportunities, incentives and land"},
+  ]},
+  {label:"Discover Ejisu", href:"#/tourism"},
+  {label:"News", href:"#/news"},
+  {label:"Contact", href:"#/contact"},
+];
+
+/* ==================== DATA ==================== */
+const NEWS = [
+  {d:"26", m:"Aug", y:"2026", cat:"Public Notice", t:"Municipal-wide sanitation exercise scheduled for the last Saturday of September",
+   x:"All households and business operators within the Ejisu, Besease-Bonwire and Onwe zonal councils are requested to participate in the clean-up from 6:00 a.m. to 10:00 a.m.", pri:true, img:"market"},
+  {d:"19", m:"Aug", y:"2026", cat:"Assembly Business", t:"Third ordinary meeting of the Assembly adopts the 2027 fee-fixing resolution",
+   x:"The resolution, adopted after debate in the General Assembly, takes effect on 1 January 2027 and has been published in full under Documents & Downloads.", img:"meeting"},
+  {d:"11", m:"Aug", y:"2026", cat:"Projects", t:"Six-unit classroom block at Kwaso handed over to the Ghana Education Service",
+   x:"The block, funded from the District Assemblies' Common Fund, replaces structures that had been in use for over three decades.", img:"classroom"},
+  {d:"04", m:"Aug", y:"2026", cat:"Tourism", t:"Bonwire Kente Festival planning committee inaugurated",
+   x:"The committee brings together the traditional council, the weavers' association and the Assembly's Department of Social Welfare and Community Development.", img:"loom"},
+  {d:"28", m:"Jul", y:"2026", cat:"Procurement", t:"Invitation to tender: rehabilitation of 4.2 km of feeder road, Onwe to Krapa",
+   x:"Bid documents are available for collection at the Procurement Unit. Closing date and submission requirements are published in the tender notice.", img:"road"},
+  {d:"17", m:"Jul", y:"2026", cat:"Revenue", t:"Property rate demand notices for 2026 now being distributed",
+   x:"Rate payers are reminded that payment may be made at the Assembly's revenue office or through the Assembly's designated payment channels.", img:"records"},
+];
+
+const DEPTS = [
+  {n:"Central Administration", d:"Coordinates the implementation of government policy across the Municipality and provides the Assembly's executive secretariat, under the Municipal Coordinating Director.", u:["Public Relations & Information","Human Resource","Client Service & Registry","Management Information Systems"]},
+  {n:"Finance / Treasury", d:"Manages the Assembly's revenue, expenditure, accounts and financial reporting, including the mobilisation of internally generated funds.", u:["Revenue Mobilisation","Accounts","Stores"]},
+  {n:"Budget Unit", d:"Provides technical leadership in the preparation, execution and monitoring of the Assembly's composite budget.", u:[]},
+  {n:"Development Planning", d:"Prepares and monitors the Medium-Term Development Plan and coordinates the planning, implementation and evaluation of development projects.", u:["Municipal Planning & Coordinating Unit","Monitoring & Evaluation"]},
+  {n:"Works", d:"Oversees the Assembly's engineering functions, including feeder roads, buildings, water and sanitation infrastructure.", u:["Feeder Roads","Water & Sanitation","Building Inspectorate"]},
+  {n:"Physical Planning", d:"Administers land use planning, layout preparation, permitting and development control across the Municipality.", u:["Town & Country Planning","Parks & Gardens"]},
+  {n:"Environmental Health & Sanitation", d:"Responsible for solid and liquid waste management, sanitary inspection, food hygiene and public health enforcement.", u:["Waste Management","Sanitary Inspectorate"]},
+  {n:"Education, Youth & Sports", d:"Supports basic education delivery, school infrastructure, scholarships and youth and sports development within the Municipality.", u:[]},
+  {n:"Health Services", d:"Coordinates with the Ghana Health Service on the delivery of primary health care, health facilities and public health programmes.", u:[]},
+  {n:"Social Welfare & Community Development", d:"Delivers social protection, child protection, disability support and community mobilisation programmes.", u:["Community Development","Social Protection"]},
+  {n:"Agriculture", d:"Provides extension services, promotes improved farming practices and supports agribusiness and value-chain development.", u:[]},
+  {n:"Transport", d:"Plans and regulates urban mobility, transport terminals and the Assembly's fleet, under the Local Governance Act, 2016.", u:[]},
+  {n:"Internal Audit", d:"Provides independent assurance over payments, revenue collection and departmental internal controls.", u:[]},
+  {n:"Procurement Unit", d:"Ensures compliance with the Public Procurement Act, manages tendering, stores and the disposal of assets.", u:[]},
+];
+
+const ZONAL = [
+  {n:"Ejisu Zonal Council", s:"Municipal capital and administrative seat", c:24},
+  {n:"Besease-Bonwire Zonal Council", s:"Kente weaving belt; Bonwire Kente Museum", c:21},
+  {n:"Kwabre Mponua Zonal Council", s:"Northern communities and farming settlements", c:17},
+  {n:"Onwe Zonal Council", s:"Eastern corridor along the Accra road", c:18},
+  {n:"Mponua Zonal Council", s:"Southern communities bordering Bosomtwe", c:13},
+];
+
+const PROJECTS = [
+  {t:"Six-unit classroom block with ancillary facilities", loc:"Kwaso", zc:"Kwabre Mponua", src:"DACF", cost:"1,480,000", st:"Completed", cls:"ok", y:"2026"},
+  {t:"Rehabilitation of 4.2 km feeder road", loc:"Onwe – Krapa", zc:"Onwe", src:"DACF-RFG", cost:"2,150,000", st:"At tender", cls:"info", y:"2026"},
+  {t:"Completion of maternity ward and staff accommodation", loc:"Besease", zc:"Besease-Bonwire", src:"DACF", cost:"1,920,000", st:"Ongoing", cls:"warn", y:"2026"},
+  {t:"Drilling and mechanisation of eight boreholes", loc:"Eight communities", zc:"Municipal-wide", src:"GoG / Partner", cost:"960,000", st:"Ongoing", cls:"warn", y:"2026"},
+  {t:"Construction of a 20-unit lockable stores market annex", loc:"Ejisu", zc:"Ejisu", src:"IGF", cost:"1,240,000", st:"Ongoing", cls:"warn", y:"2026"},
+  {t:"Reshaping and spot improvement of 11 km of farm tracks", loc:"Abenase, Asotwe", zc:"Mponua", src:"DACF", cost:"680,000", st:"Completed", cls:"ok", y:"2025"},
+  {t:"Extension of street lighting along the Kumasi–Accra corridor", loc:"Ejisu – Besease", zc:"Ejisu", src:"IGF", cost:"540,000", st:"Ongoing", cls:"warn", y:"2026"},
+  {t:"Refurbishment of the Assembly's client service centre", loc:"Ejisu", zc:"Ejisu", src:"IGF", cost:"310,000", st:"Planned", cls:"info", y:"2027"},
+];
+
+const DOCS = [
+  {t:"Composite Budget and Medium-Term Expenditure Framework, 2026–2029", c:"Budget", ft:"PDF", sz:"3.4 MB", d:"14 Feb 2026"},
+  {t:"Fee-Fixing Resolution, 2027", c:"By-laws & Resolutions", ft:"PDF", sz:"820 KB", d:"19 Aug 2026"},
+  {t:"Annual Progress Report, 2025", c:"Reports", ft:"PDF", sz:"5.1 MB", d:"31 Mar 2026"},
+  {t:"Medium-Term Development Plan, 2026–2029", c:"Planning", ft:"PDF", sz:"7.8 MB", d:"08 Jan 2026"},
+  {t:"Right to Information Manual", c:"Right to Information", ft:"PDF", sz:"640 KB", d:"12 Nov 2025"},
+  {t:"Application for a Business Operating Permit", c:"Forms", ft:"PDF", sz:"180 KB", d:"05 Jan 2026"},
+  {t:"Application for a Building Permit", c:"Forms", ft:"PDF", sz:"240 KB", d:"05 Jan 2026"},
+  {t:"Schedule of Rates and Fees, 2026", c:"Revenue", ft:"PDF", sz:"1.1 MB", d:"02 Jan 2026"},
+  {t:"Sanitation and Environmental Health By-Law", c:"By-laws & Resolutions", ft:"PDF", sz:"470 KB", d:"22 Sep 2024"},
+  {t:"Minutes of the Second Ordinary Meeting, 2026", c:"Assembly Business", ft:"PDF", sz:"1.6 MB", d:"27 May 2026"},
+];
+
+const TENDERS = [
+  {ref:"EMA/PROC/2026/014", t:"Rehabilitation of 4.2 km feeder road, Onwe to Krapa", m:"National Competitive Tendering", close:"18 Sep 2026", st:"Open", cls:"ok"},
+  {ref:"EMA/PROC/2026/013", t:"Supply and installation of 120 solar street lights", m:"National Competitive Tendering", close:"11 Sep 2026", st:"Open", cls:"ok"},
+  {ref:"EMA/PROC/2026/011", t:"Construction of a 20-unit lockable stores market annex, Ejisu", m:"National Competitive Tendering", close:"24 Jul 2026", st:"Closed – under evaluation", cls:"warn"},
+  {ref:"EMA/PROC/2026/008", t:"Drilling and mechanisation of eight boreholes", m:"Request for Quotation", close:"12 Jun 2026", st:"Awarded", cls:"info"},
+  {ref:"EMA/PROC/2026/004", t:"Supply of office equipment and consumables", m:"Request for Quotation", close:"28 Mar 2026", st:"Awarded", cls:"info"},
+];
+
+const SERVICES = [
+  {t:"Business Operating Permit", d:"Register or renew a permit to operate a business within the Municipality.", tag:"Apply online"},
+  {t:"Building Permit", d:"Apply for permission to develop, extend or alter a structure, with planning approval.", tag:"Apply online"},
+  {t:"Property Rate Enquiry", d:"Check the rate assessed on a property and the balance outstanding.", tag:"Enquiry"},
+  {t:"Birth & Death Registration", d:"Requirements, forms and the registration office serving each zonal council.", tag:"Guidance"},
+  {t:"Marriage Registration", d:"Registration of ordinance and customary marriages at the Assembly.", tag:"Guidance"},
+  {t:"Rates, Fees & Charges", d:"The full schedule of fees approved in the Assembly's fee-fixing resolution.", tag:"Download"},
+  {t:"Market Stall Allocation", d:"Apply for the allocation of a stall or store in an Assembly market.", tag:"Apply"},
+  {t:"Sanitation Service Request", d:"Request container collection, desludging or a sanitary inspection.", tag:"Request"},
+];
+
+const TOURISM = [
+  {t:"Bonwire Kente Industry", s:"Bonwire", p:"The village whose looms gave Ghana its most recognisable cloth. Weavers work in open sheds along the main street, and visitors can watch a strip taken from warp to finished cloth — and try the loom themselves.", tags:["Craft","Living heritage","Shopping"], img:"loom"},
+  {t:"Bonwire Kente Museum", s:"Bonwire", p:"A purpose-built museum commissioned in 2024, presenting the history of kente, the meaning carried by individual patterns, and the master weavers who hold the tradition.", tags:["Museum","Family friendly"], img:"kente"},
+  {t:"Yaa Asantewaa Museum", s:"Ejisu", p:"Dedicated to the Queen Mother of Ejisu who led the Asante in the 1900 war against British colonial forces — one of the most consequential figures in Ghana's history, and a daughter of this Municipality.", tags:["History","Museum"], img:"museum"},
+  {t:"Bobiri Forest Reserve & Butterfly Sanctuary", s:"Kubease", p:"Fifty-four square kilometres of moist semi-deciduous forest with an arboretum, a guest house and one of West Africa's richest butterfly populations — more than four hundred recorded species.", tags:["Nature","Birding","Overnight stays"], img:"forest"},
+];
+
+/* ==================== HELPERS ==================== */
+const ICONS = {
+  pay:'<rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/>',
+  permit:'<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9.5 14.5l2 2 4-4.5"/>',
+  report:'<path d="M12 3 2.5 20h19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.4" r=".9" fill="currentColor" stroke="none"/>',
+  doc:'<path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>',
+  tender:'<path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8 2.5 15h5z"/><path d="M19 8l-2.5 7h5z"/><path d="M8 21h8"/>',
+  dept:'<path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M10 21v-6h4v6"/>',
+  build:'<path d="M3 21h18"/><path d="M6 21V6h6v15"/><path d="M12 21V11h6v10"/><path d="M9 9v.01M9 13v.01M9 17v.01M15 14v.01M15 18v.01"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".9" fill="currentColor" stroke="none"/>',
+};
+const ICON = (k) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.info}</svg>`;
+const el = (h) => h;
+
+/* ==================== ILLUSTRATIONS ==================== */
+const rep = (n, fn) => Array.from({length:n}, (_,i) => fn(i)).join('');
+
+const SCENES = {
+  /* Bonwire: a weaver at the narrow-strip loom */
+  loom: () => `
+    <rect width="400" height="225" fill="#EFD9AC"/>
+    <circle cx="330" cy="40" r="42" fill="#F7E9C5"/>
+    <rect y="168" width="400" height="57" fill="#C08F52"/>
+    <rect y="168" width="400" height="4" fill="#A87740"/>
+    <rect y="196" width="400" height="29" fill="#B8834A"/>
+    ${rep(3,i=>`<g><rect x="${296+i*36}" y="0" width="21" height="92" fill="#0E3629"/>
+      ${rep(6,j=>`<rect x="${296+i*36}" y="${6+j*15}" width="21" height="7" fill="${['#C9942F','#8E3E27','#F4E7C9','#1F6B4B'][(i+j)%4]}"/>`)}
+      <rect x="${294+i*36}" y="90" width="25" height="5" fill="#5C3B22"/></g>`)}
+    ${rep(15,i=>`<rect x="113" y="${94+i*2.4}" width="287" height="1.5" fill="${['#C9942F','#8E3E27','#0E3629','#F4E7C9','#1F6B4B'][i%5]}" opacity=".92"/>`)}
+    <g><rect x="228" y="118" width="54" height="26" rx="3" fill="#7A6248"/>
+      <rect x="228" y="118" width="54" height="7" rx="3" fill="#5C4A32"/>
+      <path d="M228 130 l-114 -6" stroke="#8A7255" stroke-width="2"/>
+      <ellipse cx="255" cy="146" rx="30" ry="5" fill="#00000018"/></g>
+    <g><rect x="150" y="128" width="46" height="9" fill="#8E3E27"/>
+      <rect x="150" y="137" width="46" height="9" fill="#C9942F"/>
+      <rect x="150" y="146" width="46" height="9" fill="#F4E7C9"/>
+      <rect x="150" y="155" width="46" height="9" fill="#0E3629"/></g>
+    ${rep(5,i=>`<g transform="translate(${196+i*22} 162)">
+      <rect x="-6" y="-7" width="12" height="14" rx="2" fill="${['#C9942F','#8E3E27','#1F6B4B','#F4E7C9','#C9552F'][i]}"/>
+      <rect x="-8" y="-9" width="16" height="3" fill="#5C4A32"/><rect x="-8" y="6" width="16" height="3" fill="#5C4A32"/></g>`)}
+    <rect x="14" y="92" width="52" height="36" fill="#0E3629"/>
+    ${rep(9,i=>`<rect x="${16+(i%3)*17}" y="${94+Math.floor(i/3)*11}" width="15" height="9" fill="${['#C9942F','#8E3E27','#F4E7C9'][(i+Math.floor(i/3))%3]}"/>`)}
+    <rect x="52" y="52" width="70" height="10" fill="#4A2F1A"/>
+    <rect x="58" y="58" width="10" height="118" fill="#5C3B22"/>
+    <rect x="106" y="58" width="10" height="118" fill="#5C3B22"/>
+    <rect x="70" y="80" width="34" height="7" fill="#4A2F1A"/>
+    <rect x="70" y="126" width="34" height="7" fill="#4A2F1A"/>
+    <path d="M74 176 c0-26 8-40 22-40 s22 14 22 40Z" fill="#3A2417"/>
+    <circle cx="96" cy="124" r="12" fill="#3A2417"/>
+    <path d="M108 146 l26 -14" stroke="#3A2417" stroke-width="7" stroke-linecap="round"/>
+    <g transform="translate(336 150)">
+      <path d="M-15 26 c0-28 6-38 15-38 s15 10 15 38Z" fill="#4A3524"/>
+      <circle cy="-18" r="11" fill="#3A2417"/>
+      <path d="M-4 -4 l-22 6" stroke="#4A3524" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="-28" cy="4" r="8" fill="#C9942F"/></g>`,
+
+  /* Bobiri Forest Reserve and butterfly sanctuary */
+  forest: () => `
+    <rect width="400" height="225" fill="#CFE3D3"/>
+    <circle cx="318" cy="46" r="27" fill="#F3E4B8"/>
+    <path d="M0 116 q60 -30 116 -6 q54 22 108 -4 q62 -30 176 4 V225 H0Z" fill="#8FBFA4"/>
+    ${rep(9,i=>`<ellipse cx="${18+i*46}" cy="${104+(i%3)*12}" rx="42" ry="27" fill="#5FA787" opacity=".95"/>`)}
+    ${rep(7,i=>`<rect x="${34+i*54}" y="${118+(i%3)*8}" width="7" height="${70-(i%3)*8}" fill="#4A3524"/>`)}
+    ${rep(8,i=>`<ellipse cx="${-4+i*54}" cy="${140+(i%2)*14}" rx="40" ry="25" fill="#2E8A63"/>`)}
+    ${rep(6,i=>`<rect x="${18+i*66}" y="${152+(i%2)*10}" width="9" height="${60-(i%2)*10}" fill="#3A2A1E"/>`)}
+    ${rep(7,i=>`<ellipse cx="${8+i*62}" cy="${176+(i%2)*10}" rx="44" ry="26" fill="#14493A"/>`)}
+    <rect y="204" width="400" height="21" fill="#0E3629"/>
+    ${[[262,72,'#E0B865'],[300,98,'#C9552F'],[228,110,'#F4E7C9'],[336,64,'#C9942F']].map(([x,y,c])=>
+      `<g transform="translate(${x} ${y})"><path d="M0 0 c-13 -12 -19 -2 -13 5 c4 5 9 4 13 -5Z" fill="${c}"/>
+       <path d="M0 0 c13 -12 19 -2 13 5 c-4 5 -9 4 -13 -5Z" fill="${c}"/>
+       <path d="M0 0 c-9 9 -13 3 -9 -2Z" fill="${c}" opacity=".8"/>
+       <path d="M0 0 c9 9 13 3 9 -2Z" fill="${c}" opacity=".8"/>
+       <rect x="-.9" y="-4" width="1.8" height="10" fill="#3A2A1E"/></g>`).join('')}`,
+
+  /* The Municipal Assembly block */
+  assembly: () => `
+    <rect width="400" height="225" fill="#E2EDEC"/>
+    <circle cx="60" cy="44" r="30" fill="#F2E9CE" opacity=".8"/>
+    <path d="M0 150 q100 -20 200 -4 q100 16 200 -6 V225 H0Z" fill="#BFCDBE"/>
+    <rect y="182" width="400" height="43" fill="#C9CEC3"/>
+    <g>
+      <rect x="66" y="96" width="268" height="86" fill="#F4F2EA"/>
+      <rect x="66" y="88" width="268" height="12" fill="#DED9C9"/>
+      <rect x="60" y="80" width="280" height="10" fill="#14493A"/>
+      ${rep(6,i=>`<rect x="${86+i*40}" y="112" width="22" height="42" fill="#5E8E9E"/>`)}
+      <rect x="176" y="120" width="48" height="62" fill="#14493A"/>
+      <rect x="184" y="128" width="32" height="54" fill="#8FB6A6"/>
+      <rect x="150" y="98" width="100" height="8" fill="#C9942F"/>
+      ${rep(5,i=>`<rect x="${152+i*24}" y="106" width="9" height="76" fill="#EFEDE3"/>`)}
+      <rect x="140" y="176" width="120" height="6" fill="#D9D5C6"/>
+      <rect x="132" y="182" width="136" height="6" fill="#CFCBBC"/>
+    </g>
+    <rect x="352" y="52" width="4" height="130" fill="#8B9490"/>
+    <g><rect x="356" y="54" width="40" height="9" fill="#C9552F"/><rect x="356" y="63" width="40" height="9" fill="#C9942F"/>
+      <rect x="356" y="72" width="40" height="9" fill="#1F6B4B"/>
+      <path d="M376 62 l2.6 5.4 5.9 .8 -4.3 4.2 1 5.9 -5.2 -2.8 -5.2 2.8 1 -5.9 -4.3 -4.2 5.9 -.8Z" fill="#171E19"/></g>
+    ${[24,44].map((x,i)=>`<g><rect x="${x+8}" y="${104+i*8}" width="5" height="${78-i*8}" fill="#5C4A32"/>
+      ${rep(6,j=>`<path d="M${x+10} ${106+i*8} q${j<3?-30:30} ${-8-j*4} ${j<3?-38:38} ${14+j*6}" stroke="#2E8A63" stroke-width="5" fill="none" stroke-linecap="round"/>`)}</g>`).join('')}`,
+
+  /* Market day */
+  market: () => `
+    <rect width="400" height="225" fill="#F0DFB6"/>
+    <circle cx="200" cy="30" r="46" fill="#F7ECCE"/>
+    <rect y="164" width="400" height="61" fill="#C4924F"/>
+    <rect y="164" width="400" height="4" fill="#A97C3F"/>
+    ${[['#C9552F',10],['#C9942F',88],['#1F6B4B',166],['#B5643C',244],['#2E8A63',322]].map(([c,x],i)=>`
+      <g><path d="M${x-6} 106 L${x+40} 78 L${x+86} 106Z" fill="${c}"/>
+        <rect x="${x-6}" y="104" width="92" height="7" fill="${c}" opacity=".75"/>
+        <rect x="${x+2}" y="110" width="4" height="54" fill="#6B4A2A"/>
+        <rect x="${x+72}" y="110" width="4" height="54" fill="#6B4A2A"/>
+        <rect x="${x-2}" y="140" width="84" height="6" fill="#7A5632"/>
+        ${rep(4,j=>`<circle cx="${x+10+j*20}" cy="${134}" r="7" fill="${['#C9552F','#2E8A63','#C9942F','#8E3E27'][(i+j)%4]}"/>`)}
+      </g>`).join('')}
+    ${[52,150,268,352].map((x,i)=>`<g><circle cx="${x}" cy="${150+(i%2)*4}" r="10" fill="#3A2417"/>
+      <path d="M${x-12} 200 c0-30 5-42 12-42 s12 12 12 42Z" fill="${['#14493A','#8E3E27','#C9942F','#1F6B4B'][i]}"/>
+      <ellipse cx="${x}" cy="${138+(i%2)*4}" rx="13" ry="6" fill="#C9552F"/></g>`).join('')}`,
+
+  /* A school block */
+  classroom: () => `
+    <rect width="400" height="225" fill="#E4EFE3"/>
+    <circle cx="330" cy="40" r="26" fill="#F4EAC6"/>
+    <path d="M0 154 q120 -14 240 -2 q80 8 160 -6 V225 H0Z" fill="#A9C7A5"/>
+    <rect y="188" width="400" height="37" fill="#BCA97C"/>
+    <g>
+      <path d="M44 100 L200 62 L356 100Z" fill="#9C4B32"/>
+      <rect x="52" y="98" width="296" height="90" fill="#F2EFE4"/>
+      <rect x="52" y="98" width="296" height="8" fill="#C9942F"/>
+      ${rep(5,i=>`<g><rect x="${72+i*58}" y="120" width="34" height="34" fill="#4E7F8E"/>
+        <rect x="${72+i*58}" y="120" width="34" height="34" fill="none" stroke="#F2EFE4" stroke-width="3"/>
+        <rect x="${88+i*58}" y="120" width="3" height="34" fill="#F2EFE4"/></g>`)}
+      <rect x="52" y="170" width="296" height="6" fill="#DAD5C4"/>
+      ${rep(6,i=>`<rect x="${58+i*57}" y="176" width="7" height="12" fill="#DAD5C4"/>`)}
+    </g>
+    ${[100,130,272].map((x,i)=>`<g><circle cx="${x}" cy="${196}" r="7" fill="#3A2417"/>
+      <path d="M${x-8} 218 c0-16 3-22 8-22 s8 6 8 22Z" fill="${['#C9552F','#C9942F','#1F6B4B'][i]}"/></g>`).join('')}
+    <g><rect x="16" y="150" width="8" height="52" fill="#5C4A32"/>
+      ${rep(7,j=>`<ellipse cx="${20+(j-3)*11}" cy="${142+Math.abs(j-3)*7}" rx="17" ry="11" fill="#2E8A63"/>`)}</g>`,
+
+  /* Feeder road */
+  road: () => `
+    <rect width="400" height="225" fill="#EDE2C0"/>
+    <circle cx="284" cy="42" r="30" fill="#F6EDD0"/>
+    <path d="M0 122 q70 -22 140 -6 q76 18 150 -8 q60 -20 110 2 V225 H0Z" fill="#93B58C"/>
+    <path d="M176 118 L224 118 L400 225 L-40 225Z" fill="#B5643C"/>
+    <path d="M182 120 L218 120 L340 225 L44 225Z" fill="#C4794D"/>
+    ${rep(5,i=>`<rect x="${196-i*i*1.6}" y="${132+i*20}" width="${8+i*5}" height="${9+i*3}" fill="#EFE3C4" opacity=".85"/>`)}
+    <rect y="196" width="400" height="6" fill="#8E3E27" opacity=".25"/>
+    ${[[26,150],[64,142],[340,146],[372,138]].map(([x,y],i)=>`<g>
+      <rect x="${x}" y="${y}" width="9" height="${64}" fill="#4A3524"/>
+      ${rep(6,j=>`<ellipse cx="${x+4+(j-2.5)*13}" cy="${y-6+Math.abs(j-2.5)*8}" rx="21" ry="13" fill="${i%2?'#2E8A63':'#1F6B4B'}"/>`)}</g>`).join('')}
+    <g><rect x="150" y="112" width="100" height="7" fill="#9AA39B"/>
+      <rect x="150" y="112" width="6" height="16" fill="#7E877F"/><rect x="244" y="112" width="6" height="16" fill="#7E877F"/></g>`,
+
+  /* Borehole / water supply */
+  water: () => `
+    <rect width="400" height="225" fill="#E3EEEA"/>
+    <circle cx="76" cy="40" r="28" fill="#F3E9C8" opacity=".85"/>
+    <path d="M0 138 q100 -22 200 -4 q100 18 200 -8 V225 H0Z" fill="#A6C6AE"/>
+    <rect y="176" width="400" height="49" fill="#BC9C63"/>
+    <ellipse cx="200" cy="182" rx="86" ry="15" fill="#A98A55"/>
+    <g>
+      <rect x="186" y="118" width="28" height="66" fill="#7E877F"/>
+      <rect x="180" y="176" width="40" height="10" fill="#5F6862"/>
+      <rect x="176" y="112" width="48" height="12" fill="#5F6862"/>
+      <path d="M214 118 l34 -16 l6 10 l-34 16Z" fill="#5F6862"/>
+      <rect x="164" y="132" width="26" height="9" fill="#5F6862"/>
+      <path d="M164 141 q-10 16 -4 26" stroke="#7FC2DE" stroke-width="6" fill="none" stroke-linecap="round"/>
+    </g>
+    ${[[128,'#E0B865'],[108,'#C9942F'],[256,'#E0B865'],[278,'#C9942F']].map(([x,c])=>`
+      <g><rect x="${x}" y="152" width="24" height="28" rx="3" fill="${c}"/>
+        <rect x="${x+7}" y="146" width="10" height="8" fill="${c}"/>
+        <rect x="${x+3}" y="158" width="18" height="3" fill="#00000018"/></g>`).join('')}
+    <g><circle cx="298" cy="128" r="11" fill="#3A2417"/>
+      <path d="M284 178 c0-32 6-44 14-44 s14 12 14 44Z" fill="#1F6B4B"/>
+      <ellipse cx="298" cy="114" rx="14" ry="6" fill="#C9552F"/></g>`,
+
+  /* Solar street lighting at dusk */
+  lights: () => `
+    <rect width="400" height="225" fill="#2B3D50"/>
+    <path d="M0 0 H400 V96 H0Z" fill="#3B4F63"/>
+    <path d="M0 60 H400 V96 H0Z" fill="#7A5C58"/>
+    <path d="M0 82 H400 V100 H0Z" fill="#B5734A"/>
+    <circle cx="330" cy="94" r="20" fill="#E8A65B"/>
+    <path d="M0 100 q100 -12 200 -2 q100 10 200 -6 V225 H0Z" fill="#1B2B25"/>
+    <path d="M160 104 L240 104 L400 225 L-30 225Z" fill="#2A3A33"/>
+    ${rep(6,i=>`<rect x="${196-i*i*2}" y="${118+i*18}" width="${7+i*4}" height="${8+i*3}" fill="#E5DCC4" opacity=".55"/>`)}
+    ${[[62,104],[300,112],[142,124]].map(([x,y],i)=>`<g>
+      <rect x="${x}" y="${y-58}" width="5" height="${72+i*10}" fill="#8B9490"/>
+      <rect x="${x-16}" y="${y-72}" width="34" height="10" fill="#3F5064" transform="rotate(-14 ${x} ${y-68})"/>
+      <path d="M${x+2} ${y-58} h22" stroke="#8B9490" stroke-width="4"/>
+      <rect x="${x+20}" y="${y-56}" width="12" height="5" rx="2" fill="#E8DBA8"/>
+      <path d="M${x+26} ${y-51} l-30 ${70+i*10} h60Z" fill="#F0D98E" opacity=".22"/>
+      <circle cx="${x+26}" cy="${y-51}" r="9" fill="#F5E6AE" opacity=".5"/></g>`).join('')}`,
+
+  /* Heritage / museum */
+  museum: () => `
+    <rect width="400" height="225" fill="#E8D3AC"/>
+    <circle cx="200" cy="34" r="48" fill="#F3E4C0"/>
+    <rect y="172" width="400" height="53" fill="#BE9A66"/>
+    ${rep(9,i=>`<g transform="translate(${24+i*46} 46)" stroke="#C9942F" stroke-width="2" fill="none" opacity=".5">
+      <path d="M0 -12 L12 0 L0 12 L-12 0Z"/><path d="M0 -5 L5 0 L0 5 L-5 0Z" fill="#C9942F" stroke="none"/></g>`)}
+    <g>
+      <rect x="76" y="92" width="248" height="82" fill="#F1E6D0"/>
+      <path d="M66 92 L200 56 L334 92Z" fill="#8E3E27"/>
+      <rect x="66" y="88" width="268" height="8" fill="#6E2F1E"/>
+      <path d="M166 174 v-42 a34 34 0 0 1 68 0 v42Z" fill="#4A2F1A"/>
+      <path d="M174 174 v-38 a26 26 0 0 1 52 0 v38Z" fill="#2A1810"/>
+      ${[100,270].map(x=>`<g><rect x="${x}" y="112" width="30" height="44" fill="#C9942F" opacity=".7"/>
+        <path d="M${x+15} 100 L${x+30} 114 L${x} 114Z" fill="#8E3E27"/></g>`).join('')}
+    </g>
+    <g transform="translate(200 148)">
+      <rect x="-24" y="18" width="48" height="12" fill="#7E6A4A"/>
+      <rect x="-18" y="4" width="36" height="16" fill="#8E7A56"/>
+      <path d="M-11 4 c0-22 4-30 11-30 s11 8 11 30Z" fill="#C9942F"/>
+      <circle cy="-30" r="8" fill="#C9942F"/>
+      <path d="M-11 -14 l-14 -16" stroke="#C9942F" stroke-width="5" stroke-linecap="round"/>
+    </g>`,
+
+  /* Farmland */
+  farm: () => `
+    <rect width="400" height="225" fill="#EAEFC9"/>
+    <circle cx="322" cy="38" r="30" fill="#F5EFC4"/>
+    <path d="M0 108 q90 -18 180 -4 q110 16 220 -8 V225 H0Z" fill="#B9CE8C"/>
+    ${rep(5,i=>`<path d="M0 ${128+i*20} q200 ${i%2?-16:16} 400 0 V${150+i*20} q-200 ${i%2?16:-16} -400 0Z" fill="${i%2?'#8FB863':'#79A452'}"/>`)}
+    ${rep(22,i=>`<g transform="translate(${10+i*18} ${140+(i%4)*20})">
+      <path d="M0 0 v-14 M0 -12 l-7 -8 M0 -12 l7 -8 M0 -6 l-6 -7 M0 -6 l6 -7" stroke="#3E7A34" stroke-width="2" fill="none"/></g>`)}
+    ${[52,346].map((x,i)=>`<g><rect x="${x}" y="86" width="7" height="46" fill="#5C4A32"/>
+      ${rep(7,j=>`<path d="M${x+3} 88 q${j<3?-26:26} ${-10-j*3} ${j<3?-34:34} ${10+j*5}" stroke="#2E8A63" stroke-width="4.5" fill="none" stroke-linecap="round"/>`)}</g>`).join('')}
+    <g transform="translate(196 168)"><circle cy="-30" r="9" fill="#3A2417"/>
+      <path d="M-12 8 c0-28 5-38 12-38 s12 10 12 38Z" fill="#C9552F"/>
+      <path d="M0 -18 l22 -8" stroke="#3A2417" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cy="-38" rx="17" ry="6" fill="#C9942F"/></g>`,
+
+  /* Assembly meeting / durbar */
+  meeting: () => `
+    <rect width="400" height="225" fill="#E9E3D2"/>
+    <rect y="0" width="400" height="120" fill="#DED6C0"/>
+    ${rep(4,i=>`<rect x="${18+i*104}" y="18" width="58" height="76" fill="#CFC5AC"/>`)}
+    <rect y="118" width="400" height="7" fill="#B9AE92"/>
+    <rect y="125" width="400" height="100" fill="#C6BCA3"/>
+    <g><rect x="130" y="96" width="140" height="10" fill="#C9942F"/>
+      <rect x="150" y="60" width="100" height="38" fill="#14493A"/>
+      <path d="M200 64 l3 6.4 7 1 -5 4.9 1.2 7 -6.2 -3.3 -6.2 3.3 1.2 -7 -5 -4.9 7 -1Z" fill="#E0B865"/></g>
+    ${rep(10,i=>{const x=24+ (i%5)*82, y=140+Math.floor(i/5)*44;
+      return `<g transform="translate(${x} ${y})"><circle cy="-16" r="12" fill="#3A2417"/>
+        <path d="M-17 26 c0-30 7-40 17-40 s17 10 17 40Z" fill="${['#14493A','#8E3E27','#C9942F','#1F6B4B','#4A3524'][i%5]}"/>
+        <rect x="-13" y="6" width="26" height="4" fill="#00000022"/></g>`})}
+    <rect y="182" width="400" height="6" fill="#00000012"/>`,
+
+  /* Documents / records */
+  records: () => `
+    <rect width="400" height="225" fill="#E7EDE6"/>
+    <rect y="150" width="400" height="75" fill="#D3DCD1"/>
+    ${[[44,'#14493A'],[110,'#C9942F'],[176,'#8E3E27'],[242,'#1F6B4B'],[308,'#4E7F8E']].map(([x,c],i)=>`
+      <g transform="translate(${x} ${44+(i%2)*14})">
+        <rect width="52" height="72" rx="3" fill="#FFFFFF" stroke="#C3CDC4"/>
+        <rect y="0" width="52" height="9" rx="3" fill="${c}"/>
+        ${rep(5,j=>`<rect x="8" y="${20+j*10}" width="${36-(j%2)*12}" height="3.4" rx="1.7" fill="#C9D2CA"/>`)}
+      </g>`).join('')}
+    <g transform="translate(150 108)">
+      <rect width="118" height="88" rx="4" fill="#FFFFFF" stroke="#B3BEB5" stroke-width="1.5"/>
+      <rect width="118" height="14" rx="4" fill="#14493A"/>
+      <rect x="12" y="30" width="94" height="5" rx="2.5" fill="#C9942F"/>
+      ${rep(6,j=>`<rect x="12" y="${44+j*8}" width="${94-(j%3)*26}" height="3.6" rx="1.8" fill="#CBD4CC"/>`)}
+    </g>
+    <g transform="translate(288 140)"><circle r="26" fill="none" stroke="#8E3E27" stroke-width="4"/>
+      <path d="M18 18 l16 16" stroke="#8E3E27" stroke-width="6" stroke-linecap="round"/>
+      <circle r="26" fill="#8E3E27" opacity=".08"/></g>`,
+};
+
+function scene(key, cap){
+  const inner = (SCENES[key] || SCENES.assembly)();
+  return `<svg viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${cap ? esc(cap) : 'Illustration'}">${inner}</svg>`;
+}
+
+function photo(key, cap, cls){
+  return `<figure class="photo ${cls||''}">${scene(key, cap)}${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
+}
+
+/* Quick-action tiles — shown on Services and, in short form, across inner pages */
+const QUICK = [
+  ['Pay a rate or fee','Property rates, business permits and market tolls','#/services','pay'],
+  ['Apply for a permit','Business operating and building permits','#/services','permit'],
+  ['Report a problem','Sanitation, drains, street lights, roads','#/issue','report'],
+  ['Find a document','Budgets, by-laws, reports and forms','#/documents','doc'],
+  ['Bid for a contract','Open tenders and how to submit','#/tenders','tender'],
+  ['Contact a department','Fourteen departments and units','#/departments','dept'],
+  ['Check a project','What is being built, where, and at what cost','#/projects','build'],
+  ['Request information','Your rights under Act 989','#/contact','info'],
+];
+
+function quickBlock(){
+  return `<div class="sec-head"><span class="eyebrow mono">Start here</span>
+      <h2>What most people come here to do</h2>
+      <p>Eight services account for the majority of visits to an Assembly office. Each one begins here.</p>
+    </div>
+    <div class="grid g4">
+      ${QUICK.map(([t,d,h,ic])=>`<a class="tile" href="${h}">${ICON(ic)}<div><b>${t}</b><span>${d}</span></div></a>`).join('')}
+    </div>`;
+}
+
+function quickStrip(keys){
+  const set = QUICK.filter(q => keys.includes(q[3]));
+  return `<div class="quickstrip">
+    <div class="qs-head mono">Also on this site</div>
+    <div class="grid g4">
+      ${set.map(([t,d,h,ic])=>`<a class="tile" href="${h}">${ICON(ic)}<div><b>${t}</b><span>${d}</span></div></a>`).join('')}
+    </div>
+  </div>`;
+}
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function pageHead(crumb, title, kicker){
+  return `<div class="page-head"><div class="wrap">
+    <div class="crumbs"><a href="#/">Home</a><span>&rsaquo;</span>${crumb.map(c=>typeof c==='string'?`<span style="opacity:1;color:var(--text-2)">${c}</span>`:`<a href="${c.h}">${c.t}</a><span>&rsaquo;</span>`).join('')}</div>
+    <h1>${title}</h1>
+    ${kicker?`<p class="kicker">${kicker}</p>`:''}
+  </div></div>`;
+}
+
+function demoNote(text){
+  return `<div class="notice"><b>Illustrative content.</b> ${text}</div>`;
+}
+
+/* ==================== PAGES ==================== */
+const PAGES = {};
+
+PAGES[''] = PAGES['/'] = () => `
+<section class="hero">
+  <canvas id="kente" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-eyebrow mono">Ashanti Region &middot; Republic of Ghana</div>
+    <h1>The Assembly at the heart of Asante country.</h1>
+    <p class="lead">Ejisu Municipal Assembly serves 181,723 residents across 93 communities and five zonal councils &mdash; home of the Bonwire loom, of Yaa Asantewaa, and of the Bobiri forest. This is where you find our decisions, our accounts, our projects and our people.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" href="#/services">Use an Assembly service</a>
+      <a class="btn btn-ghost" href="#/projects">See what we are building</a>
+      <a class="btn btn-ghost" href="#/documents">Budgets &amp; reports</a>
+    </div>
+  </div>
+</section>
+
+<div class="statstrip"><div class="wrap">
+  <div class="stat"><div class="n">181,723</div><div class="l">Residents</div><div class="s">2021 Population &amp; Housing Census</div></div>
+  <div class="stat"><div class="n">93</div><div class="l">Communities</div><div class="s">Across five zonal councils</div></div>
+  <div class="stat"><div class="n">28</div><div class="l">Electoral areas</div><div class="s">42 Assembly members in total</div></div>
+  <div class="stat"><div class="n">224</div><div class="l">Square kilometres</div><div class="s">17 km east of Kumasi</div></div>
+</div></div>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow mono">The Municipality</span>
+      <h2>Ninety-three communities, one Assembly</h2>
+      <p>From the looms of Bonwire to the farms of Mponua and the forest at Kubease — the places and the work that make up Ejisu.</p>
+    </div>
+    <div class="photoband">
+      ${photo('loom','Narrow-strip weaving at Bonwire — the cloth that carries the Municipality\'s name furthest','ratio-wide')}
+      <div class="row">
+        ${photo('assembly','The Municipal Assembly block, Ejisu','ratio-16')}
+        ${photo('market','Market day on the Kumasi–Accra corridor','ratio-16')}
+        ${photo('farm','Farmland in the Mponua zonal council','ratio-16')}
+        ${photo('forest','Bobiri Forest Reserve, Kubease','ratio-16')}
+      </div>
+    </div>
+    <p class="imgnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".9" fill="currentColor" stroke="none"/></svg>
+      <span>Illustrations, not photographs. The delivered site uses the Assembly's own photography; where the archive is thin, a professional photography day across Ejisu, Bonwire and Bobiri is a priced option in the Andrastack proposal.</span></p>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:44px;align-items:start">
+      <div>
+        <div class="sec-head" style="margin-bottom:12px"><span class="eyebrow mono">Latest</span><h2>News &amp; public notices</h2></div>
+        ${NEWS.slice(0,4).map(n=>`
+        <article class="news-item">
+          <div class="news-thumb">${scene(n.img, n.t)}<div class="datechip"><div class="d">${n.d}</div><div class="m">${n.m}</div></div></div>
+          <div>
+            <h3><a href="#/news">${esc(n.t)}</a></h3>
+            <p>${esc(n.x)}</p>
+            <div class="meta"><span class="tag">${n.cat}</span>${n.pri?'<span class="pill crit">Priority notice</span>':''}<span style="font-size:.78rem;color:var(--muted)">${n.d} ${n.m} ${n.y}</span></div>
+          </div>
+        </article>`).join('')}
+        <p style="margin-top:20px"><a href="#/news" class="btn btn-ghost">All news &amp; notices</a></p>
+      </div>
+      <div>
+        <div class="card" style="border-left:3px solid var(--gold-2)">
+          <h3 style="margin-bottom:12px">Where the Assembly's money comes from</h3>
+          <p style="margin-bottom:18px;font-size:.85rem">Composition of total receipts, 2024 composite budget.</p>
+          <div class="bars">
+            ${[['Government of Ghana transfers',38.1,'var(--forest)'],
+               ["District Assemblies' Common Fund",30.9,'var(--gold-2)'],
+               ['Internally generated funds',26.3,'var(--clay)'],
+               ['DACF Responsiveness Factor Grant',3.6,'var(--forest-2)'],
+               ['Development partner transfers',0.9,'var(--muted)']].map(([l,v,c])=>`
+            <div class="bar-row">
+              <div><div class="lab">${l}</div><div class="bar-track"><div class="bar-fill" data-w="${v}" style="width:0;background:${c}"></div></div></div>
+              <div class="val">${v.toFixed(1)}%</div>
+            </div>`).join('')}
+          </div>
+        </div>
+        <a class="card" href="#/tenders" style="display:block;margin-top:18px">
+          <span class="mono" style="color:var(--gold)">Procurement</span>
+          <h3 style="margin-top:8px">2 tenders currently open</h3>
+          <p>Feeder road rehabilitation and solar street lighting. Bid documents available from the Procurement Unit.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow mono">Discover Ejisu</span>
+      <h2>A Municipality that gave Ghana its cloth and one of its greatest leaders</h2>
+      <p>Three of the Ashanti Region's best-known destinations sit within our boundaries.</p>
+    </div>
+    <div class="grid g3">${TOURISM.slice(0,3).map(tourCard).join('')}</div>
+    <p style="margin-top:24px"><a href="#/tourism" class="btn btn-ghost">Plan a visit</a></p>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <div class="grid g2" style="gap:40px;align-items:center">
+      <div>
+        <div class="sec-head" style="margin-bottom:16px"><span class="eyebrow mono">Invest</span><h2>Seventeen kilometres from Kumasi, on the road to Accra</h2></div>
+        <p style="color:var(--muted);margin-bottom:16px">Ejisu sits on the trunk road linking Ghana's second city to the capital and the ports. That position, a young workforce and available land make the Municipality one of the Ashanti Region's most practical places to establish a plant, a warehouse or an agribusiness.</p>
+        <a class="btn btn-primary" href="#/invest">Investment profile</a>
+      </div>
+      <div class="grid g2" style="gap:14px">
+        ${[['87%','of households engaged in agriculture'],['5','zonal councils with serviced land'],['17 km','to Kumasi city centre'],['1 hr','to Kumasi International Airport']].map(([n,l])=>`
+        <div class="card" style="padding:18px"><div style="font-family:var(--f-display);font-size:1.6rem;font-weight:600;color:var(--forest)">${n}</div><div style="font-size:.82rem;color:var(--muted);margin-top:5px;line-height:1.45">${l}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>`;
+
+function tourCard(t){
+  return `<article class="tour">
+    <div class="art">${t.img==='kente' ? weave('#0B2A20',['#14493A','#B8862B','#0E3629','#F4E7C9','#8E3E27','#14493A'],407) : scene(t.img, t.t)}</div>
+    <div class="bd">
+      <span class="mono" style="color:var(--gold)">${t.s}</span>
+      <h3>${t.t}</h3>
+      <p>${t.p}</p>
+      <div class="foot">${t.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+    </div>
+  </article>`;
+}
+
+function weave(bg, pal, seedBase){
+  // strip-woven cloth: alternating warp-faced and weft-faced blocks, as on a Bonwire loom
+  const C=20, cols=16, rows=9, out=[];
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const s=(r*7919+c*104729+seedBase)%997;
+    const vertical=((r+c)%2===0);
+    const col=pal[(s>>3)%pal.length];
+    const x=c*C, y=r*C, pad=1.2, n=3;
+    for(let k=0;k<n;k++){
+      if((s+k)%(vertical?3:4)===0) continue;
+      out.push(vertical
+        ? `<rect x="${(x+pad+k*(C-pad*2)/n).toFixed(1)}" y="${y+pad}" width="${((C-pad*2)/n).toFixed(1)}" height="${C-pad*2}" fill="${col}"/>`
+        : `<rect x="${x+pad}" y="${(y+pad+k*(C-pad*2)/n).toFixed(1)}" width="${C-pad*2}" height="${((C-pad*2)/n).toFixed(1)}" fill="${col}"/>`);
+    }
+  }
+  return `<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%" aria-hidden="true">
+    <rect width="320" height="180" fill="${bg}"/>${out.join('')}</svg>`;
+}
+
+function artFor(t){
+  if(t.pat==='kente'){
+    return weave('#0B2A20', t.c1==='#8E3E27'
+      ? ['#8E3E27','#B8862B','#F0D9A0','#0E3629','#14493A','#B8862B']
+      : ['#14493A','#B8862B','#0E3629','#F0D9A0','#8E3E27','#14493A'], t.c1==='#8E3E27'?11:407);
+  }
+  if(t.pat==='adinkra'){
+    return `<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%" aria-hidden="true">
+      <rect width="320" height="180" fill="${t.c1}"/>
+      ${Array.from({length:15},(_,i)=>{const x=(i%5)*64+32,y=Math.floor(i/5)*60+30;
+        return `<g transform="translate(${x} ${y})" stroke="${t.c2}" stroke-width="2.2" fill="none" opacity=".8">
+          <path d="M0 -17 L17 0 L0 17 L-17 0 Z"/>
+          <path d="M0 -8 L8 0 L0 8 L-8 0 Z" fill="${t.c2}" stroke="none"/>
+          <path d="M-24 0h6M18 0h6M0 -24v6M0 18v6"/></g>`;}).join('')}
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="width:100%;height:100%" aria-hidden="true">
+    <rect width="320" height="180" fill="${t.c1}"/>
+    ${Array.from({length:26},(_,i)=>{const x=i*13+4,h=60+((i*37)%80);
+      return `<path d="M${x} 180 L${x} ${180-h} M${x} ${180-h+14} l-8 -10 M${x} ${180-h+14} l8 -10 M${x} ${180-h+32} l-10 -12 M${x} ${180-h+32} l10 -12" stroke="${t.c2}" stroke-width="1.6" fill="none" opacity="${.3+((i*13)%50)/100}"/>`;}).join('')}
+    <g opacity=".9"><path d="M250 46 q10 -14 20 0 q14 -4 10 10 q10 8 -2 14 q2 14 -14 8 q-8 10 -16 -2 q-14 2 -10 -12 q-10 -10 2 -14 Z" fill="#F0D9A0"/></g>
+  </svg>`;
+}
+
+/* ---------- ABOUT ---------- */
+PAGES['/about'] = () => `
+${pageHead(['About the Municipality'],'About the Ejisu Municipal Assembly','One of 261 Metropolitan, Municipal and District Assemblies in Ghana, and one of 43 in the Ashanti Region.')}
+<div class="wrap" style="padding-top:30px">
+  ${photo('assembly','The Municipal Assembly block at Ejisu, seat of the Assembly since 2018','ratio-wide')}
+</div>
+<div class="wrap pagegrid" style="padding-top:26px">
+  <div class="prose">
+    <h2>The Municipality</h2>
+    <p>The Ejisu Municipal Assembly was created on 15 March 2018, when the north-eastern part of the former Ejisu-Juaben Municipal District was carved out to form the Juaben Municipal District. Its administrative capital is Ejisu, approximately seventeen kilometres east of Kumasi on the trunk road to Accra.</p>
+    <p>The Municipality covers roughly 224 square kilometres and, at the 2021 Population and Housing Census, was home to 181,723 people &mdash; 48.6 per cent male and 51.4 per cent female. It borders Kwabre East and Sekyere East to the north, Bosomtwe and Asante Akim South to the south, Asante Akim North to the east and the Kumasi Metropolis to the west.</p>
+
+    <h2>Vision</h2>
+    <p>To become a Municipal Assembly of excellence in service provision for accelerated and sustainable development.</p>
+
+    <h2>Mission</h2>
+    <p>The Ejisu Municipal Assembly exists to improve the quality of life of the people of the Municipality through the effective implementation of national and local policy, the equitable provision of services and infrastructure, and the creation of an environment in which enterprise and investment can succeed.</p>
+
+    <h2>Functions of the Assembly</h2>
+    <p>Under the Local Governance Act, 2016 (Act 936), the Assembly is the highest political and administrative authority in the Municipality. Its functions include:</p>
+    <ul>
+      <li>Exercising deliberative, legislative and executive powers within the Municipality.</li>
+      <li>Responsibility for the overall development of the Municipality, including the preparation and execution of development plans and budgets.</li>
+      <li>Formulating and executing plans, programmes and strategies for the effective mobilisation of resources.</li>
+      <li>Promoting and supporting productive activity and social development, and removing obstacles to initiative and development.</li>
+      <li>Initiating programmes for the development of basic infrastructure and providing municipal works and services.</li>
+      <li>Being responsible for the development, improvement and management of human settlements and the environment.</li>
+      <li>Co-operating with the appropriate national and regional security agencies to maintain security and public safety.</li>
+      <li>Ensuring ready access to the courts for the promotion of justice.</li>
+    </ul>
+
+    <h2>Economy</h2>
+    <p>Agriculture remains the dominant livelihood in the Municipality, engaging the majority of households. Principal crops include maize, cassava, plantain, cocoyam, vegetables and oil palm, with poultry and small ruminant production widely practised. Commerce and trade in farm produce follow, concentrated in the Ejisu and Besease markets and along the Kumasi&ndash;Accra corridor.</p>
+    <p>The Municipality's best-known industry is kente weaving at Bonwire and the surrounding communities, which supports weavers, dyers, traders and a growing visitor economy. A services sector &mdash; transport, financial services, hospitality and small-scale manufacturing &mdash; is expanding steadily along the trunk road.</p>
+
+    <div class="grid g2" style="margin:20px 0 26px">
+      ${photo('farm','Farmland across the Municipality','ratio-16')}
+      ${photo('market','Trade in farm produce along the corridor','ratio-16')}
+    </div>
+
+    <h2>Where the Assembly's money comes from</h2>
+    <p>The composition of the Assembly's receipts, as set out in the 2024 composite budget, is shown below. Internally generated funds &mdash; property rates, business operating permits, market tolls and fees &mdash; account for just over a quarter of the total, with the balance coming from central transfers.</p>
+    <div class="card" style="padding:22px;margin-bottom:20px">
+      <div class="bars">
+        ${[['Government of Ghana transfers',38.1,'var(--forest)'],
+           ["District Assemblies' Common Fund",30.9,'var(--gold-2)'],
+           ['Internally generated funds',26.3,'var(--clay)'],
+           ['DACF Responsiveness Factor Grant',3.6,'var(--forest-2)'],
+           ['Development partner transfers',0.9,'var(--muted)']].map(([l,v,c])=>`
+        <div class="bar-row">
+          <div><div class="lab">${l}</div><div class="bar-track"><div class="bar-fill" data-w="${v}" style="width:0;background:${c}"></div></div></div>
+          <div class="val">${v.toFixed(1)}%</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Municipality at a glance</h4>
+      <div class="kv"><span>Capital</span><b>Ejisu</b></div>
+      <div class="kv"><span>Established</span><b>15 March 2018</b></div>
+      <div class="kv"><span>Region</span><b>Ashanti</b></div>
+      <div class="kv"><span>Population</span><b>181,723</b></div>
+      <div class="kv"><span>Land area</span><b>224 km&sup2;</b></div>
+      <div class="kv"><span>Zonal councils</span><b>5</b></div>
+      <div class="kv"><span>Communities</span><b>93</b></div>
+      <div class="kv"><span>Electoral areas</span><b>28</b></div>
+      <div class="kv"><span>Assembly members</span><b>42</b></div>
+      <div class="kv"><span>Distance to Kumasi</span><b>17 km</b></div>
+    </div>
+    <div class="box">
+      <h4>Principal towns</h4>
+      <ul>
+        <li>Ejisu <small style="color:var(--muted)">&mdash; municipal capital</small></li>
+        <li>Besease</li><li>Bonwire</li><li>Onwe</li><li>Abenase</li><li>Kwaso</li><li>Asotwe</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Related pages</h4>
+      <ul>
+        <li><a href="#/leadership">Leadership of the Assembly</a></li>
+        <li><a href="#/zonal">Sub-district structures</a></li>
+        <li><a href="#/documents">Composite budget &amp; reports</a></li>
+        <li><a href="#/tourism">Tourism &amp; culture</a></li>
+      </ul>
+    </div>
+    <div class="box" style="padding:0;overflow:hidden">${photo('forest',null,'ratio-4 square')}</div>
+  </aside>
+</div>`;
+
+/* ---------- LEADERSHIP ---------- */
+PAGES['/leadership'] = () => `
+${pageHead(['Leadership'],'Leadership of the Assembly','The political and administrative leadership of the Ejisu Municipal Assembly.')}
+<div class="wrap" style="padding-block:36px 50px">
+  <div class="notice"><b>Why these cards are empty.</b> Leadership pages go out of date faster than any other part of an Assembly website, and publishing the wrong office-holder is worse than publishing none. Rather than guess, we have built the fields and left them for the Assembly to fill &mdash; in the delivered site an authorised officer updates a name and photograph in under a minute, with no developer involved.</div>
+  <div class="grid g3" style="margin-bottom:36px">
+    ${[['Municipal Chief Executive','Political head of the Assembly, appointed by the President with the approval of the Assembly.'],
+       ['Presiding Member','Elected by the Assembly from among its members; presides over meetings of the General Assembly.'],
+       ['Municipal Coordinating Director','Administrative head of the Assembly and secretary to the General Assembly.'],
+       ['Member of Parliament','Ejisu Constituency; an ex-officio member of the Assembly.'],
+       ['Municipal Finance Officer','Custodian of the Assembly&rsquo;s funds, accounts and financial reporting.'],
+       ['Municipal Planning Officer','Head of the Municipal Planning and Coordinating Unit.']].map(([r,d])=>`
+    <div class="person">
+      <div class="ph"><span>Photograph to be<br>supplied by the Assembly</span></div>
+      <div class="bd">
+        <h3>${r}</h3>
+        <div class="role">${d}</div>
+        <div class="placeholder">Name, photograph, profile and contact details are managed by the Assembly through the content management system.</div>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <div class="sec-head"><span class="eyebrow mono">General Assembly</span><h2>Composition of the Assembly</h2>
+    <p>The General Assembly is made up of forty-two members, and meets in ordinary session at least three times a year.</p></div>
+  <div class="grid g4" style="margin-bottom:30px">
+    ${[['28','Elected members','One for each electoral area'],
+       ['12','Appointed members','Appointed by the President in consultation with traditional authorities and interest groups'],
+       ['1','Member of Parliament','Ejisu Constituency, ex officio'],
+       ['1','Municipal Chief Executive','Ex officio']].map(([n,t,d])=>`
+    <div class="card"><div style="font-family:var(--f-display);font-size:2rem;font-weight:600;color:var(--forest);line-height:1">${n}</div>
+      <h3 style="margin-top:8px;font-size:.98rem">${t}</h3><p style="font-size:.83rem">${d}</p></div>`).join('')}
+  </div>
+
+  <div class="sec-head"><h2>Statutory sub-committees</h2></div>
+  <div class="grid g3">
+    ${['Executive Committee','Finance and Administration','Development Planning','Works','Social Services','Justice and Security'].map(s=>`
+    <div class="card" style="padding:16px 18px"><h3 style="font-size:.98rem;margin:0">${s}</h3></div>`).join('')}
+  </div>
+</div>`;
+
+/* ---------- DEPARTMENTS ---------- */
+PAGES['/departments'] = () => `
+${pageHead(['Departments &amp; Units'],'Departments and Units','Fourteen departments and units deliver the Assembly&rsquo;s statutory functions across the Municipality.')}
+<div class="wrap" style="padding-block:36px 54px">
+  <div class="grid g2">
+    ${DEPTS.map(d=>`
+    <div class="card">
+      <h3>${d.n}</h3>
+      <p style="margin-top:6px">${d.d}</p>
+      ${d.u.length?`<div style="margin-top:13px;display:flex;gap:6px;flex-wrap:wrap">${d.u.map(u=>`<span class="tag">${u}</span>`).join('')}</div>`:''}
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:.83rem;color:var(--muted)">
+        Head of department, direct line and downloadable forms are published on each department&rsquo;s own page.
+      </div>
+    </div>`).join('')}
+  </div>
+  ${quickStrip(['permit','doc','report','info'])}
+</div>`;
+
+/* ---------- ZONAL ---------- */
+PAGES['/zonal'] = () => `
+${pageHead(['Sub-District Structures'],'Sub-District Structures','The Municipality is divided into five zonal councils covering 93 communities and 28 electoral areas.')}
+<div class="wrap pagegrid">
+  <div class="prose" style="max-width:none">
+    <h2>Zonal councils</h2>
+    <p>Zonal councils are the Assembly&rsquo;s sub-district structures. They bring the Assembly's work closer to communities: mobilising revenue, organising communal labour, monitoring sanitation and infrastructure, and channelling community priorities into the Assembly's planning process.</p>
+    ${ZONAL.map((z,i)=>`
+    <div class="zonal">
+      <div class="idx">${i+1}</div>
+      <div><b>${z.n}</b><small>${z.s}</small></div>
+      <div class="n" style="text-align:right"><div style="font-family:var(--f-mono);font-size:1.05rem;color:var(--forest);font-weight:600">${z.c}</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">communities</div></div>
+    </div>`).join('')}
+    <p style="font-size:.85rem;color:var(--muted);margin-top:14px">Community counts shown are illustrative and total the Municipality&rsquo;s 93 recorded communities. The Assembly maintains the authoritative list.</p>
+
+    <div style="margin:22px 0 8px">${photo('meeting','A zonal council brings the Assembly\'s work closer to communities','ratio-wide')}</div>
+
+    <h2>What a zonal council does</h2>
+    <ul>
+      <li>Enumerates rateable properties, businesses and other revenue sources within the zone.</li>
+      <li>Organises communal and voluntary work on sanitation, drains, roads and public spaces.</li>
+      <li>Monitors the delivery and condition of Assembly projects within the zone.</li>
+      <li>Educates residents on the Assembly's by-laws, rates and public health requirements.</li>
+      <li>Brings community priorities into the Assembly's planning and budgeting cycle.</li>
+    </ul>
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Structure</h4>
+      <div class="kv"><span>Zonal councils</span><b>5</b></div>
+      <div class="kv"><span>Communities</span><b>93</b></div>
+      <div class="kv"><span>Electoral areas</span><b>28</b></div>
+      <div class="kv"><span>Elected members</span><b>28</b></div>
+    </div>
+    <div class="box">
+      <h4>Contact a zonal council</h4>
+      <ul>${ZONAL.map(z=>`<li><a href="#/contact">${z.n.replace(' Zonal Council','')}</a></li>`).join('')}</ul>
+    </div>
+  </aside>
+</div>`;
+
+/* ---------- NEWS ---------- */
+PAGES['/news'] = () => `
+${pageHead(['News &amp; Notices'],'News and Public Notices','Announcements, press releases, Assembly business and public notices.')}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    ${demoNote('The items below illustrate the layout, categories and priority-notice treatment. In the delivered site an Assembly officer publishes a notice in a few minutes, with a featured image, category, attachments and an optional expiry date.')}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      ${['All','Public Notice','Assembly Business','Projects','Procurement','Revenue','Tourism'].map((c,i)=>`<span class="tag" style="${i===0?'background:var(--forest);color:#fff;border-color:var(--forest)':''};cursor:pointer;padding:5px 13px">${c}</span>`).join('')}
+    </div>
+    ${NEWS.map(n=>`
+    <article class="news-item">
+      <div class="news-thumb">${scene(n.img, n.t)}<div class="datechip"><div class="d">${n.d}</div><div class="m">${n.m}</div></div></div>
+      <div>
+        <h3>${esc(n.t)}</h3>
+        <p>${esc(n.x)}</p>
+        <div class="meta"><span class="tag">${n.cat}</span>${n.pri?'<span class="pill crit">Priority notice</span>':''}<span style="font-size:.78rem;color:var(--muted)">${n.d} ${n.m} ${n.y}</span></div>
+      </div>
+    </article>`).join('')}
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Subscribe to notices</h4>
+      <p style="font-size:.86rem;color:var(--muted);margin-bottom:12px">Receive public notices by e-mail as they are published.</p>
+      <div class="field"><input type="email" placeholder="you@example.com" aria-label="E-mail address"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:9px" onclick="alert('Subscription is illustrative in this demonstration.')">Subscribe</button>
+    </div>
+    <div class="box">
+      <h4>Categories</h4>
+      <ul>${['Public Notice','Assembly Business','Projects','Procurement','Revenue','Tourism','Health &amp; Sanitation'].map(c=>`<li><a href="#/news">${c}</a></li>`).join('')}</ul>
+    </div>
+    <div class="box">
+      <h4>Follow the Assembly</h4>
+      <ul><li><a href="#/contact">Facebook</a></li><li><a href="#/contact">X (Twitter)</a></li><li><a href="#/contact">YouTube</a></li></ul>
+    </div>
+    <div class="box" style="padding:0;overflow:hidden">${photo('meeting',null,'ratio-4 square')}</div>
+  </aside>
+</div>`;
+
+/* ---------- PROJECTS ---------- */
+PAGES['/projects'] = () => `
+${pageHead(['Development Projects'],'Development Project Register','Every project the Assembly is executing &mdash; where it is, who is funding it, what it costs and how far along it is.')}
+<div class="wrap" style="padding-block:36px 54px">
+  ${demoNote('Project records shown are illustrative. The delivered register is filterable by zonal council, funding source, year and status, and each record carries photographs and a progress log.')}
+  <div class="grid g4" style="margin-bottom:26px">
+    ${[['8','Projects on the register','2025 – 2027'],['2','Completed','Handed over'],['4','Ongoing','On site'],['GHS 9.28m','Total committed','All sources']].map(([n,t,s])=>`
+    <div class="card"><div style="font-family:var(--f-display);font-size:1.7rem;font-weight:600;color:var(--forest);line-height:1;font-variant-numeric:tabular-nums">${n}</div>
+      <div style="font-size:.85rem;font-weight:600;margin-top:7px">${t}</div><div style="font-size:.78rem;color:var(--muted);margin-top:2px">${s}</div></div>`).join('')}
+  </div>
+  <div class="sec-head" style="margin-bottom:18px"><h2 style="font-size:1.4rem">Featured projects</h2></div>
+  <div class="grid g3" style="margin-bottom:34px">
+    ${[['classroom','Six-unit classroom block','Kwaso','Completed','ok'],
+       ['road','Feeder road rehabilitation','Onwe – Krapa','At tender','info'],
+       ['water','Borehole drilling and mechanisation','Eight communities','Ongoing','warn']].map(([im,t,loc,st,cls])=>`
+    <article class="card" style="padding:0;overflow:hidden">
+      ${photo(im, null, 'ratio-16 square')}
+      <div style="padding:18px">
+        <h3 style="font-size:1rem">${t}</h3>
+        <p style="margin-top:5px">${loc}</p>
+        <div style="margin-top:11px"><span class="pill ${cls}">${st}</span></div>
+      </div>
+    </article>`).join('')}
+  </div>
+
+  <div class="sec-head" style="margin-bottom:14px"><h2 style="font-size:1.4rem">Full register</h2></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    ${['All projects','Ejisu','Besease-Bonwire','Kwabre Mponua','Onwe','Mponua'].map((c,i)=>`<span class="tag" style="${i===0?'background:var(--forest);color:#fff;border-color:var(--forest)':''};cursor:pointer;padding:5px 13px">${c}</span>`).join('')}
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Project</th><th>Location</th><th>Zonal council</th><th>Funding</th><th class="num">Cost (GHS)</th><th>Status</th></tr></thead>
+      <tbody>
+        ${PROJECTS.map(p=>`<tr>
+          <td><b style="color:var(--text);font-weight:600">${p.t}</b><br><small style="color:var(--muted)">${p.y}</small></td>
+          <td>${p.loc}</td><td>${p.zc}</td><td>${p.src}</td>
+          <td class="num">${p.cost}</td>
+          <td><span class="pill ${p.cls}">${p.st}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.83rem;color:var(--muted);margin-top:14px">DACF &mdash; District Assemblies&rsquo; Common Fund. DACF-RFG &mdash; Responsiveness Factor Grant. IGF &mdash; internally generated funds. GoG &mdash; Government of Ghana.</p>
+  ${quickStrip(['tender','doc','report','info'])}
+</div>`;
+
+/* ---------- DOCUMENTS ---------- */
+PAGES['/documents'] = () => `
+${pageHead(['Documents &amp; Downloads'],'Documents and Downloads','Budgets, by-laws, resolutions, reports, plans and application forms &mdash; published proactively under the Right to Information Act, 2019.')}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    <div class="notice green"><b>Proactive disclosure.</b> Section 3 of the Right to Information Act, 2019 (Act 989) requires public institutions to publish specified classes of information without waiting for a request. Publishing them here reduces the number of formal applications the Assembly has to process one by one.</div>
+    ${demoNote('The document list below is illustrative. In the delivered site, an officer uploads a file, chooses a category, and it appears here immediately &mdash; searchable, dated and with the file size shown.')}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      ${['All','Budget','By-laws &amp; Resolutions','Reports','Planning','Forms','Revenue','Right to Information','Assembly Business'].map((c,i)=>`<span class="tag" style="${i===0?'background:var(--forest);color:#fff;border-color:var(--forest)':''};cursor:pointer;padding:5px 13px">${c}</span>`).join('')}
+    </div>
+    ${DOCS.map(d=>`
+    <div class="docrow">
+      <div class="ft">${d.ft}</div>
+      <div class="info"><b>${d.t}</b><small>${d.c} &middot; ${d.sz} &middot; Published ${d.d}</small></div>
+      <span class="dl">Download &darr;</span>
+    </div>`).join('')}
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Most requested</h4>
+      <ul>
+        <li><a href="#/documents">Schedule of Rates and Fees, 2026</a></li>
+        <li><a href="#/documents">Business Operating Permit form</a></li>
+        <li><a href="#/documents">Building Permit form</a></li>
+        <li><a href="#/documents">Composite Budget, 2026–2029</a></li>
+      </ul>
+    </div>
+    <div class="box">
+      <h4>Right to Information</h4>
+      <p style="font-size:.86rem;color:var(--muted);margin-bottom:12px">If the information you need is not published here, you may apply to the Assembly&rsquo;s Information Officer.</p>
+      <a class="btn btn-ghost" href="#/contact" style="width:100%;justify-content:center">Make an RTI request</a>
+    </div>
+    <div class="box" style="padding:0;overflow:hidden">${photo('records',null,'ratio-4 square')}</div>
+  </aside>
+</div>`;
+
+/* ---------- TENDERS ---------- */
+PAGES['/tenders'] = () => `
+${pageHead(['Procurement &amp; Tenders'],'Procurement and Tenders','Open invitations to tender, and a record of contracts awarded, published under the Public Procurement Act, 2003 (Act 663) as amended.')}
+<div class="wrap" style="padding-block:36px 54px">
+  ${demoNote('Tender records shown are illustrative. The delivered site lists open tenders with a countdown to the closing date, downloadable bid documents, addenda, and an archive of awards.')}
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Reference</th><th>Description</th><th>Method</th><th>Closing</th><th>Status</th></tr></thead>
+      <tbody>
+        ${TENDERS.map(t=>`<tr>
+          <td style="font-family:var(--f-mono);font-size:.8rem;white-space:nowrap">${t.ref}</td>
+          <td><b style="color:var(--text);font-weight:600">${t.t}</b></td>
+          <td>${t.m}</td>
+          <td style="white-space:nowrap">${t.close}</td>
+          <td><span class="pill ${t.cls}">${t.st}</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+  <div class="grid g3" style="margin-top:30px">
+    <div class="card"><h3>How to obtain bid documents</h3><p>Bid documents are collected from the Procurement Unit at the Municipal Assembly Block, Ejisu, on payment of the non-refundable fee stated in each notice.</p></div>
+    <div class="card"><h3>Submission</h3><p>Sealed bids must be deposited in the tender box at the Assembly before the closing time stated in the notice. Late submissions are rejected unopened.</p></div>
+    <div class="card"><h3>Eligibility</h3><p>Bidders must hold a valid Public Procurement Authority registration, a tax clearance certificate and SSNIT clearance, together with any classification the notice requires.</p></div>
+  </div>
+  ${quickStrip(['doc','build','dept','info'])}
+</div>`;
+
+/* ---------- SERVICES ---------- */
+PAGES['/services'] = () => `
+${pageHead(['e-Services'],'Assembly Services','Permits, rates, registrations and requests &mdash; started online, completed at the Assembly.')}
+<div class="wrap" style="padding-block:36px 54px">
+  ${quickBlock()}
+  <div style="height:44px"></div>
+  <div class="notice green"><b>Ready for online payment.</b> The site is built so that payment of rates, permits and fees can be connected to the Government of Ghana&rsquo;s central payment platform, with automatic receipting. This is a priced option in the Andrastack proposal rather than part of the core scope, so the Assembly can commission it when it is ready.</div>
+  <div class="grid g2">
+    ${SERVICES.map(s=>`
+    <a class="tile" href="#/services" style="border-left-color:var(--forest)">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>
+      <div><b>${s.t}</b><span>${s.d}</span><span style="margin-top:8px"><span class="tag">${s.tag}</span></span></div>
+    </a>`).join('')}
+  </div>
+  <div class="sec-head" style="margin-top:44px"><h2>What you need to bring</h2>
+    <p>Most Assembly transactions can be completed in one visit if you arrive with the right documents.</p></div>
+  <div class="grid g3">
+    <div class="card"><h3>Business operating permit</h3><p>Business registration certificate, TIN, Ghana Card of the proprietor, and the previous year&rsquo;s permit where applicable.</p></div>
+    <div class="card"><h3>Building permit</h3><p>Site plan, architectural and structural drawings, land title or allocation note, and evidence of payment of the processing fee.</p></div>
+    <div class="card"><h3>Property rate</h3><p>Your property rate demand notice or the property identification number, and the Ghana Card of the rate payer.</p></div>
+  </div>
+</div>`;
+
+/* ---------- ISSUE ---------- */
+PAGES['/issue'] = () => `
+${pageHead(['Report an Issue'],'Report an Issue','Choked drains, uncollected refuse, broken street lights, damaged roads &mdash; tell the Assembly and get a reference number.')}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    <div class="notice"><b>How this works.</b> Your report is given a reference number, routed automatically to the responsible department, and recorded so the Assembly can see what residents are reporting and where. In this demonstration the form does not submit.</div>
+    <form class="formgrid" onsubmit="event.preventDefault();document.getElementById('issueOk').hidden=false;window.scrollTo({top:0,behavior:'smooth'})">
+      <div class="field full"><label for="cat">What are you reporting? <span class="req">*</span></label>
+        <select id="cat" required>
+          <option value="">Choose a category</option>
+          <option>Uncollected refuse or overflowing container</option>
+          <option>Choked or damaged drain</option>
+          <option>Broken or unlit street light</option>
+          <option>Damaged road, pothole or failed culvert</option>
+          <option>Unauthorised development or building</option>
+          <option>Burst pipe or water supply problem</option>
+          <option>Public health or food hygiene concern</option>
+          <option>Other</option>
+        </select></div>
+      <div class="field"><label for="zc">Zonal council <span class="req">*</span></label>
+        <select id="zc" required><option value="">Choose a zonal council</option>${ZONAL.map(z=>`<option>${z.n.replace(' Zonal Council','')}</option>`).join('')}</select></div>
+      <div class="field"><label for="comm">Community or landmark <span class="req">*</span></label><input id="comm" required placeholder="e.g. Besease, near the market"></div>
+      <div class="field full"><label for="desc">Describe the problem <span class="req">*</span></label>
+        <textarea id="desc" required placeholder="What is wrong, how long has it been like this, and is anyone at risk?"></textarea>
+        <small>Please do not include personal information about other people.</small></div>
+      <div class="field"><label for="nm">Your name</label><input id="nm" placeholder="Optional"></div>
+      <div class="field"><label for="ph">Telephone <span class="req">*</span></label><input id="ph" required placeholder="For the Assembly to reach you"></div>
+      <div class="field full"><label for="photo">Photograph</label><input id="photo" type="file"><small>Optional. A photograph helps the department find and assess the problem faster.</small></div>
+      <div class="field full">
+        <button class="btn btn-primary" type="submit">Submit report</button>
+      </div>
+    </form>
+  </div>
+  <aside>
+    <div class="box" id="issueOk" hidden style="border-color:var(--forest);background:var(--forest-soft)">
+      <h4 style="color:var(--forest)">Report received</h4>
+      <p style="font-size:.88rem;color:var(--text-2)">Reference <b style="font-family:var(--f-mono)">EMA-2026-04871</b>. In the delivered site this is e-mailed to you and to the responsible department. This demonstration does not store anything.</p>
+    </div>
+    <div class="box">
+      <h4>Urgent matters</h4>
+      <ul>
+        <li><b>Fire</b> &mdash; 192</li>
+        <li><b>Police</b> &mdash; 191</li>
+        <li><b>Ambulance</b> &mdash; 193</li>
+        <li><b>Assembly duty officer</b> &mdash; 0322 000 000</li>
+      </ul>
+      <p style="font-size:.83rem;color:var(--muted);margin-top:10px">Do not use this form for emergencies.</p>
+    </div>
+    <div class="box">
+      <h4>What happens next</h4>
+      <ul>
+        <li>You receive a reference number.</li>
+        <li>The report reaches the responsible department the same working day.</li>
+        <li>An officer assesses the report and, where necessary, visits the site.</li>
+        <li>You are contacted on the number you gave.</li>
+      </ul>
+    </div>
+  </aside>
+</div>`;
+
+/* ---------- TOURISM ---------- */
+PAGES['/tourism'] = () => `
+${pageHead(['Tourism &amp; Culture'],'Tourism and Culture','Kente, courage and forest &mdash; three reasons Ejisu is on Ghana&rsquo;s cultural map.')}
+<div class="wrap" style="padding-block:36px 54px">
+  <div class="grid g2" style="margin-bottom:44px">${TOURISM.map(tourCard).join('')}</div>
+
+  <div class="sec-head"><span class="eyebrow mono">Yaa Asantewaa</span><h2>The Queen Mother of Ejisu</h2></div>
+  <div class="grid" style="grid-template-columns:1.4fr 1fr;gap:36px;align-items:start">
+    <div class="prose" style="max-width:none">
+      <p>In 1900, with the Asantehene Prempeh I in exile and the Golden Stool demanded by the colonial governor, it was the Queen Mother of Ejisu who rose in the council and said that if the men would not go forward, the women would. Nana Yaa Asantewaa led the Asante in the last of the Anglo-Asante wars &mdash; the only one in the series led by a woman.</p>
+      <p>She was captured and exiled to the Seychelles, where she died in 1921. Her name is carried today by schools, a girls&rsquo; secondary school in Kumasi, a museum in Ejisu and, more than a century on, by an idea of Ghanaian womanhood that has outlived every institution that opposed her.</p>
+      <p>The Yaa Asantewaa Museum at Ejisu holds her story. Ejisu is not merely near this history. Ejisu is where it happened.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--gold-2)">
+      <h3 style="margin-bottom:12px">Planning a visit</h3>
+      <div class="kv" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem"><span style="color:var(--muted)">From Kumasi</span><b>17 km / 30 min</b></div>
+      <div class="kv" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem"><span style="color:var(--muted)">From Accra</span><b>250 km / 4 hr</b></div>
+      <div class="kv" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem"><span style="color:var(--muted)">Best season</span><b>Nov – Mar</b></div>
+      <div class="kv" style="display:flex;justify-content:space-between;padding:8px 0;font-size:.88rem"><span style="color:var(--muted)">Overnight</span><b>Bobiri guest house</b></div>
+      <a class="btn btn-primary" href="#/contact" style="width:100%;justify-content:center;margin-top:14px">Contact the tourism desk</a>
+    </div>
+  </div>
+</div>`;
+
+/* ---------- INVEST ---------- */
+PAGES['/invest'] = () => `
+${pageHead(['Invest in Ejisu'],'Invest in Ejisu','On the Kumasi&ndash;Accra corridor, with land, labour and an Assembly that answers the phone.')}
+<div class="wrap" style="padding-top:30px">
+  ${photo('road','The Kumasi–Accra trunk road through the Municipality','ratio-wide')}
+</div>
+<div class="wrap pagegrid" style="padding-top:26px">
+  <div class="prose" style="max-width:none">
+    <h2>Why here</h2>
+    <p>Ejisu sits on the trunk road that carries goods between Ghana&rsquo;s second city and the capital, and onward to Tema and Takoradi. Kumasi &mdash; the country&rsquo;s largest inland market and the seat of the Asante Kingdom &mdash; is seventeen kilometres to the west; Kumasi International Airport is under an hour away. Land in the Municipality is more available and more affordable than in the metropolis it borders, and the workforce is young and largely local.</p>
+    <p>The Assembly has consistently identified the Municipality&rsquo;s position on this corridor as a case for an inland port serving the northern half of Ghana. Whether or not that project proceeds, the logic that supports it &mdash; road access, land, proximity to a major market &mdash; is the same logic that supports a warehouse, a processing plant or an assembly line here today.</p>
+
+    <h2>Sectors with room to grow</h2>
+    <ul>
+      <li><b>Agro-processing.</b> Maize, cassava, plantain, oil palm and vegetables are produced in volume across all five zonal councils, and most leave the Municipality unprocessed.</li>
+      <li><b>Logistics and warehousing.</b> Trunk-road frontage with space that the Kumasi metropolis no longer has.</li>
+      <li><b>Textiles and craft manufacturing.</b> The Bonwire weaving cluster is an established skills base with a national and diaspora market.</li>
+      <li><b>Hospitality and tourism.</b> Three nationally known attractions with very little accommodation between them.</li>
+      <li><b>Poultry and livestock.</b> Established smallholder production seeking feed supply, veterinary services and cold chain.</li>
+      <li><b>Building materials.</b> Steady residential and commercial construction demand along the corridor.</li>
+    </ul>
+
+    <h2>What the Assembly does for investors</h2>
+    <ul>
+      <li>Assists with the identification of suitable land and introduction to the relevant traditional authority.</li>
+      <li>Processes business operating permits and building permits through a single point of contact.</li>
+      <li>Provides the Municipality&rsquo;s planning schemes, layouts and development control requirements.</li>
+      <li>Publishes the schedule of rates and fees in advance, so costs are known before commitment.</li>
+      <li>Connects investors to national agencies, including the Ghana Investment Promotion Centre and the Ghana Free Zones Authority.</li>
+    </ul>
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Position</h4>
+      <div class="kv"><span>To Kumasi</span><b>17 km</b></div>
+      <div class="kv"><span>To Kumasi airport</span><b>~1 hr</b></div>
+      <div class="kv"><span>To Accra</span><b>250 km</b></div>
+      <div class="kv"><span>To Tema Port</span><b>~280 km</b></div>
+      <div class="kv"><span>Population</span><b>181,723</b></div>
+      <div class="kv"><span>Land area</span><b>224 km&sup2;</b></div>
+    </div>
+    <div class="box" style="border-color:var(--gold-2)">
+      <h4>Talk to us</h4>
+      <p style="font-size:.87rem;color:var(--muted);margin-bottom:13px">The Municipal Planning and Coordinating Unit is the first point of contact for investment enquiries.</p>
+      <a class="btn btn-gold" href="#/contact" style="width:100%;justify-content:center">Make an enquiry</a>
+    </div>
+    <div class="box" style="padding:0;overflow:hidden">${photo('market',null,'ratio-4 square')}</div>
+  </aside>
+</div>`;
+
+/* ---------- CONTACT ---------- */
+PAGES['/contact'] = () => `
+${pageHead(['Contact Us'],'Contact the Assembly','Offices, departments, the Information Officer and how to reach us.')}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    <div class="grid g2" style="margin-bottom:30px">
+      <div class="card">
+        <h3>Municipal Assembly Block</h3>
+        <p style="margin-top:8px">Ejisu, Ashanti Region<br>P. O. Box 25, Ejisu<br>Ghana</p>
+        <p style="margin-top:10px">Monday to Friday<br>8:00&nbsp;a.m. &ndash; 5:00&nbsp;p.m.</p>
+      </div>
+      <div class="card">
+        <h3>General enquiries</h3>
+        <p style="margin-top:8px">Telephone: 0322&nbsp;000&nbsp;000<br>E-mail: info@ejisuma.gov.gh</p>
+        <p style="margin-top:10px;font-size:.83rem;color:var(--muted)">Contact details shown are illustrative placeholders for this demonstration.</p>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-bottom:18px"><h2>Right to Information</h2>
+      <p>Under the Right to Information Act, 2019 (Act 989), you have a right of access to information held by the Assembly. Much of it is already published under Documents &amp; Downloads. If what you need is not there, apply to the Information Officer.</p></div>
+    <div class="card" style="border-left:3px solid var(--gold-2);margin-bottom:34px">
+      <h3>Information Officer</h3>
+      <p style="margin-top:8px">Public Relations and Information Unit, Central Administration<br>E-mail: rti@ejisuma.gov.gh</p>
+      <p style="margin-top:10px;font-size:.86rem">The Assembly must respond to an application within fourteen days, or within the time the Act otherwise allows.</p>
+    </div>
+
+    <div class="sec-head" style="margin-bottom:18px"><h2>Send a message</h2></div>
+    <form class="formgrid" onsubmit="event.preventDefault();alert('The contact form is illustrative in this demonstration. In the delivered site it is validated, spam-protected, routed to the department you choose, and archived in the dashboard.')">
+      <div class="field"><label for="cn">Your name <span class="req">*</span></label><input id="cn" required></div>
+      <div class="field"><label for="ce">E-mail <span class="req">*</span></label><input id="ce" type="email" required></div>
+      <div class="field"><label for="cp">Telephone</label><input id="cp"></div>
+      <div class="field"><label for="cd">Department</label>
+        <select id="cd"><option>General enquiries</option>${DEPTS.slice(0,10).map(d=>`<option>${d.n}</option>`).join('')}</select></div>
+      <div class="field full"><label for="cm">Message <span class="req">*</span></label><textarea id="cm" required></textarea></div>
+      <div class="field full"><button class="btn btn-primary" type="submit">Send message</button></div>
+    </form>
+    ${quickStrip(['pay','permit','report','doc'])}
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Find us</h4>
+      <div style="border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:12px">
+        <svg viewBox="0 0 300 210" style="width:100%;display:block" aria-label="Illustrative location map of Ejisu">
+          <rect width="300" height="210" fill="var(--surface-2)"/>
+          <path d="M0 130 Q80 118 150 126 T300 112" stroke="var(--gold-2)" stroke-width="7" fill="none"/>
+          <path d="M0 132 Q80 120 150 128 T300 114" stroke="var(--surface)" stroke-width="1.5" stroke-dasharray="8 8" fill="none"/>
+          <path d="M150 127 L156 210" stroke="var(--line)" stroke-width="5" fill="none"/>
+          <path d="M150 127 L120 20" stroke="var(--line)" stroke-width="5" fill="none"/>
+          <circle cx="60" cy="150" r="16" fill="var(--forest)" opacity=".2"/>
+          <circle cx="235" cy="70" r="22" fill="var(--forest)" opacity=".2"/>
+          <text x="42" y="176" font-size="10" fill="var(--muted)" font-family="Public Sans,sans-serif">Kumasi &rarr;</text>
+          <text x="248" y="128" font-size="10" fill="var(--muted)" font-family="Public Sans,sans-serif">&rarr; Accra</text>
+          <text x="212" y="60" font-size="10" fill="var(--muted)" font-family="Public Sans,sans-serif">Bobiri</text>
+          <g transform="translate(150 127)">
+            <path d="M0 0 c-9 -13 -13 -18 -13 -25 a13 13 0 1 1 26 0 c0 7 -4 12 -13 25Z" fill="var(--clay)"/>
+            <circle cy="-25" r="5" fill="var(--surface)"/>
+          </g>
+          <text x="160" y="112" font-size="11" font-weight="700" fill="var(--text)" font-family="Public Sans,sans-serif">Ejisu</text>
+        </svg>
+      </div>
+      <p style="font-size:.8rem;color:var(--muted)">Illustrative map. The delivered site embeds an interactive map with directions.</p>
+    </div>
+    <div class="box">
+      <h4>Departments</h4>
+      <ul>${DEPTS.slice(0,7).map(d=>`<li><a href="#/departments">${d.n}</a></li>`).join('')}<li><a href="#/departments">All departments &rarr;</a></li></ul>
+    </div>
+  </aside>
+</div>`;
+
+/* ==================== ROUTER ==================== */
+function buildNav(){
+  const cur = location.hash.replace(/^#/,'') || '/';
+  document.getElementById('navWrap').innerHTML = NAV.map((n,i)=>{
+    const active = n.href ? (n.href.replace(/^#/,'')===cur) : n.children.some(c=>c.href.replace(/^#/,'')===cur);
+    if(n.children){
+      return `<div class="nav-item${active?' active':''}" data-i="${i}">
+        <span class="nav-link" role="button" tabindex="0" aria-expanded="false">${n.label}
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 4 4 4 4-4"/></svg></span>
+        <div class="dropdown">${n.children.map(c=>`<a href="${c.href}">${c.label}<small>${c.note}</small></a>`).join('')}</div>
+      </div>`;
+    }
+    return `<div class="nav-item${active?' active':''}"><a class="nav-link" href="${n.href}">${n.label}</a></div>`;
+  }).join('');
+
+  document.querySelectorAll('.nav-item .nav-link[role="button"]').forEach(link=>{
+    const item = link.parentElement;
+    const toggle = (e)=>{
+      e.preventDefault();
+      const open = item.dataset.open === '1';
+      document.querySelectorAll('.nav-item').forEach(n=>{n.dataset.open='0';const l=n.querySelector('.nav-link[role="button"]');if(l)l.setAttribute('aria-expanded','false')});
+      item.dataset.open = open ? '0' : '1';
+      link.setAttribute('aria-expanded', open ? 'false':'true');
+    };
+    link.addEventListener('click', toggle);
+    link.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') toggle(e); });
+  });
+}
+
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.nav-item')) document.querySelectorAll('.nav-item').forEach(n=>n.dataset.open='0');
+});
+
+function render(){
+  const path = location.hash.replace(/^#/,'') || '/';
+  const page = PAGES[path] || (()=>`
+    ${pageHead(['Page not found'],'This page is not part of the demonstration','The navigation of the delivered site covers all fourteen sections set out in the proposal.')}
+    <div class="wrap" style="padding-block:40px 70px"><a class="btn btn-primary" href="#/">Return to the home page</a></div>`);
+  document.getElementById('main').innerHTML = page();
+  buildNav();
+  document.getElementById('mainNav').classList.remove('open');
+  document.getElementById('burger').setAttribute('aria-expanded','false');
+  window.scrollTo({top:0,behavior:'instant'});
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.bar-fill').forEach(b=>{ b.style.width = b.dataset.w + '%'; });
+  });
+  if(path==='/'||path==='') drawKente();
+}
+
+window.addEventListener('hashchange', render);
+
+/* ---- controls ---- */
+document.getElementById('burger').addEventListener('click', ()=>{
+  const nav = document.getElementById('mainNav');
+  const open = nav.classList.toggle('open');
+  document.getElementById('burger').setAttribute('aria-expanded', open?'true':'false');
+});
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  const s = document.getElementById('searchSheet');
+  s.hidden = !s.hidden;
+  document.getElementById('searchBtn').setAttribute('aria-expanded', s.hidden?'false':'true');
+  if(!s.hidden) s.querySelector('input').focus();
+});
+document.getElementById('themeBtn').addEventListener('click', ()=>{
+  const r = document.documentElement;
+  const cur = r.getAttribute('data-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = cur ? (cur==='dark'?'light':'dark') : (prefersDark?'light':'dark');
+  r.setAttribute('data-theme', next);
+  try{ localStorage.setItem('ema-theme', next); }catch(e){}
+  drawKente();
+});
+try{ const t = localStorage.getItem('ema-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
+
+/* ---- kente canvas ---- */
+function drawKente(){
+  const cv = document.getElementById('kente');
+  if(!cv) return;
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if(!w||!h) return;
+  cv.width = w*dpr; cv.height = h*dpr;
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,h);
+
+  const warp = ['#0E3629','#14493A','#8E3E27','#B8862B','#F0D9A0','#0E3629','#14493A','#B8862B'];
+  const weft = ['#B8862B','#0E3629','#8E3E27','#14493A','#F0D9A0','#0E3629'];
+  const cell = Math.max(26, Math.round(w/34));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const cols = Math.ceil(w/cell)+1, rows = Math.ceil(h/cell)+1;
+  const blocks = [];
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const seed = (r*7919 + c*104729) % 1000;
+      const vertical = ((r+c) % 2 === 0);
+      const pal = vertical ? warp : weft;
+      blocks.push({x:c*cell, y:r*cell, col:pal[(seed>>3)%pal.length], vertical, delay:(c*22 + r*46)%1400, seed});
+    }
+  }
+
+  const t0 = performance.now();
+  function frame(now){
+    const t = reduced ? 99999 : (now - t0);
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = '#0B2A20';
+    ctx.fillRect(0,0,w,h);
+    let done = true;
+    for(const b of blocks){
+      const p = Math.min(1, Math.max(0, (t - b.delay)/620));
+      if(p < 1) done = false;
+      if(p <= 0) continue;
+      const e = 1 - Math.pow(1-p, 3);
+      ctx.globalAlpha = e*0.92;
+      ctx.fillStyle = b.col;
+      const pad = 1.5;
+      if(b.vertical){
+        const stripes = 3;
+        const sw = (cell - pad*2)/stripes;
+        for(let s=0;s<stripes;s++){
+          if((b.seed + s) % 3 === 0) continue;
+          ctx.fillRect(b.x+pad+s*sw, b.y+pad, sw*e*0.92, cell-pad*2);
+        }
+      }else{
+        const stripes = 3;
+        const sh = (cell - pad*2)/stripes;
+        for(let s=0;s<stripes;s++){
+          if((b.seed + s) % 4 === 0) continue;
+          ctx.fillRect(b.x+pad, b.y+pad+s*sh, cell-pad*2, sh*e*0.92);
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    if(!done) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(drawKente,180); });
+
+render();
+</script>
+
+</body>
+</html>

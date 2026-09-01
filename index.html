@@ -328,6 +328,84 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .imgnote{font-size:.79rem;color:var(--muted);margin-top:10px;display:flex;gap:8px;align-items:flex-start}
 .imgnote svg{width:14px;height:14px;flex:none;margin-top:3px;color:var(--gold)}
 
+/* ===== STAFF DASHBOARD (admin mock) ===== */
+.admin-shell{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--surface)}
+.admin-top{background:#0E2A21;color:#D7E6DC;padding:11px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.admin-top .brand{font-family:var(--f-display);font-weight:600;color:#fff;font-size:.98rem}
+.admin-top .env{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;background:#C9942F;color:#1A1204;padding:3px 8px;border-radius:3px;font-weight:600}
+.admin-who{margin-left:auto;display:flex;align-items:center;gap:9px;font-size:.8rem;color:#B6CCC0}
+.admin-avatar{width:29px;height:29px;border-radius:50%;background:#C9942F;color:#1A1204;display:grid;place-items:center;font-weight:700;font-size:.74rem;flex:none}
+.admin-layout{display:grid;grid-template-columns:206px 1fr}
+@media(max-width:820px){.admin-layout{grid-template-columns:1fr}.admin-side{display:flex;overflow-x:auto;gap:4px;padding:8px}.admin-side .grp{display:none}}
+.admin-side{background:#12271F;padding:14px 10px}
+.admin-side .grp{font-family:var(--f-mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:#6E8C7D;padding:12px 10px 6px}
+.admin-side a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r);color:#B6CCC0;font-size:.855rem;font-weight:500;white-space:nowrap}
+.admin-side a:hover{background:rgba(255,255,255,.07);color:#fff;text-decoration:none}
+.admin-side a.on{background:#C9942F;color:#1A1204;font-weight:600}
+.admin-side a .n{margin-left:auto;font-family:var(--f-mono);font-size:.7rem;opacity:.85}
+.admin-side a.on .n{opacity:1}
+.admin-main{padding:22px;background:var(--surface-2);min-width:0}
+.admin-h{font-family:var(--f-display);font-size:1.24rem;font-weight:600;margin-bottom:3px}
+.admin-sub{font-size:.85rem;color:var(--muted);margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:15px 16px}
+.kpi .n{font-family:var(--f-display);font-size:1.6rem;font-weight:600;color:var(--forest);line-height:1;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:.76rem;color:var(--muted);margin-top:6px;font-weight:600}
+.kpi .d{font-size:.72rem;margin-top:4px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);margin-bottom:18px;overflow:hidden}
+.panel-h{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.panel-h h4{font-family:var(--f-display);font-size:1.02rem;font-weight:600;margin:0}
+.panel-b{padding:18px}
+.timer{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.82rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:5px 11px;border-radius:100px}
+.timer .dot{width:7px;height:7px;border-radius:50%;background:var(--clay);flex:none}
+.timer.run .dot{animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.pubok{border:1px solid var(--forest);background:var(--forest-soft);border-radius:var(--r-lg);padding:16px 18px;margin-bottom:16px}
+.pubok h5{font-family:var(--f-display);font-size:1.02rem;color:var(--forest);margin:0 0 6px}
+.pubok p{font-size:.88rem;color:var(--text-2)}
+.pubok .big{font-family:var(--f-mono);font-size:1.5rem;color:var(--forest);font-weight:600;display:block;margin:8px 0 2px}
+.err{background:var(--clay-soft);border-left:3px solid var(--clay);color:var(--clay);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;font-size:.86rem;margin-bottom:14px;font-weight:500}
+.chk{display:flex;align-items:center;gap:9px;font-size:.88rem;color:var(--text-2);cursor:pointer}
+.chk input{width:16px;height:16px;accent-color:var(--forest)}
+.actrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px}
+
+/* ===== RATE LOOKUP ===== */
+.rate-search{display:flex;gap:10px;flex-wrap:wrap}
+.rate-search input{flex:1;min-width:230px;padding:13px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--text);font:inherit;font-size:1rem;font-family:var(--f-mono);letter-spacing:.04em}
+.samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.samples .lab{font-size:.8rem;color:var(--muted)}
+.samp{font-family:var(--f-mono);font-size:.78rem;padding:5px 11px;border:1px dashed var(--line);border-radius:100px;color:var(--forest);cursor:pointer;background:var(--surface)}
+.samp:hover{border-style:solid;border-color:var(--forest);background:var(--forest-soft)}
+.ratecard{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface);overflow:hidden;margin-top:22px}
+.ratecard .rh{background:var(--forest);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ratecard .rh .id{font-family:var(--f-mono);font-size:.95rem;font-weight:600}
+.ratecard .rh .sp{margin-left:auto}
+.rategrid{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+@media(max-width:640px){.rategrid{grid-template-columns:1fr}}
+.rategrid .cell{padding:13px 20px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft)}
+.rategrid .cell:nth-child(2n){border-right:0}
+.rategrid .cell .k{font-size:.73rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.rategrid .cell .v{font-size:.98rem;color:var(--text);margin-top:3px;font-weight:500}
+.rategrid .cell .v.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.balance{padding:20px;background:var(--surface-2);border-top:1px solid var(--line);display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.balance .amt{font-family:var(--f-display);font-size:2rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.balance .lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:5px}
+.paybox{border:1px solid var(--gold-2);border-radius:var(--r-lg);background:var(--gold-soft);padding:20px;margin-top:20px}
+.chan{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+@media(max-width:640px){.chan{grid-template-columns:1fr}}
+.chan label{display:flex;gap:10px;align-items:flex-start;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);cursor:pointer;font-size:.87rem}
+.chan label:hover{border-color:var(--forest)}
+.chan input{margin-top:2px;accent-color:var(--forest);flex:none}
+.chan b{display:block;font-weight:600;color:var(--text)}
+.chan span{display:block;color:var(--muted);font-size:.79rem;margin-top:2px}
+.receipt{border:1px solid var(--forest);border-radius:var(--r-lg);background:var(--surface);margin-top:18px;overflow:hidden}
+.receipt .rt{background:var(--forest);color:#fff;padding:13px 18px;font-family:var(--f-display);font-weight:600}
+.receipt .rb{padding:18px}
+.receipt .line{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.89rem}
+.receipt .line:last-child{border-bottom:0}
+.receipt .line b{font-variant-numeric:tabular-nums}
+
 /* quick strip on inner pages */
 .quickstrip{margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
 .qs-head{color:var(--gold);margin-bottom:14px}
@@ -395,6 +473,7 @@ footer.site .about p{font-size:.885rem;line-height:1.65;color:#A9C0B2;max-width:
       <a href="#/contact">Right to Information</a>
       <a href="#/contact">0322&nbsp;000&nbsp;000</a>
       <a href="#/services">e-Services</a>
+      <a href="#/admin">Staff login</a>
     </div>
   </div>
 </div>
@@ -482,6 +561,7 @@ footer.site .about p{font-size:.885rem;line-height:1.65;color:#A9C0B2;max-width:
         <h4>Services</h4>
         <ul>
           <li><a href="#/services">e-Services</a></li>
+          <li><a href="#/rates">Property Rate Lookup</a></li>
           <li><a href="#/issue">Report an Issue</a></li>
           <li><a href="#/documents">Documents &amp; Downloads</a></li>
           <li><a href="#/tenders">Procurement &amp; Tenders</a></li>
@@ -495,6 +575,7 @@ footer.site .about p{font-size:.885rem;line-height:1.65;color:#A9C0B2;max-width:
           <li><a href="#/invest">Invest in Ejisu</a></li>
           <li><a href="#/contact">Contact Us</a></li>
           <li><a href="#/contact">Right to Information</a></li>
+          <li><a href="#/admin">Staff dashboard</a></li>
         </ul>
       </div>
     </div>
@@ -519,6 +600,7 @@ const NAV = [
   ]},
   {label:"Services", children:[
     {label:"e-Services", href:"#/services", note:"Permits, rates, registrations and fees"},
+    {label:"Property Rate Lookup", href:"#/rates", note:"Check what is assessed and what is owed"},
     {label:"Report an Issue", href:"#/issue", note:"Sanitation, roads, drains and street lights"},
     {label:"Documents & Downloads", href:"#/documents", note:"Budgets, by-laws, reports and forms"},
     {label:"Procurement & Tenders", href:"#/tenders", note:"Open tenders and awarded contracts"},
@@ -608,13 +690,36 @@ const TENDERS = [
 const SERVICES = [
   {t:"Business Operating Permit", d:"Register or renew a permit to operate a business within the Municipality.", tag:"Apply online"},
   {t:"Building Permit", d:"Apply for permission to develop, extend or alter a structure, with planning approval.", tag:"Apply online"},
-  {t:"Property Rate Enquiry", d:"Check the rate assessed on a property and the balance outstanding.", tag:"Enquiry"},
+  {t:"Property Rate Lookup", d:"Check the rate assessed on a property and the balance outstanding.", tag:"Try it now", href:"#/rates"},
   {t:"Birth & Death Registration", d:"Requirements, forms and the registration office serving each zonal council.", tag:"Guidance"},
   {t:"Marriage Registration", d:"Registration of ordinance and customary marriages at the Assembly.", tag:"Guidance"},
   {t:"Rates, Fees & Charges", d:"The full schedule of fees approved in the Assembly's fee-fixing resolution.", tag:"Download"},
   {t:"Market Stall Allocation", d:"Apply for the allocation of a stall or store in an Assembly market.", tag:"Apply"},
   {t:"Sanitation Service Request", d:"Request container collection, desludging or a sanitary inspection.", tag:"Request"},
 ];
+
+/* Runtime state for the demonstration */
+let PUBLISHED = [];
+let TIMER_ID = null, T0 = null;
+const CAT_IMG = {"Public Notice":"market","Assembly Business":"meeting","Projects":"classroom",
+  "Procurement":"road","Revenue":"records","Tourism":"loom","Health & Sanitation":"water"};
+
+const RATEBOOK = {
+  "EJ-2026-04417": {owner:"Osei Yaw Enterprise", prop:"Two-storey commercial building",
+    loc:"Ejisu — opposite the lorry park", zc:"Ejisu", use:"Commercial", yr:"2026",
+    rv:"182,000.00", impost:"0.85%", annual:"1,547.00", paid:"900.00", bal:"647.00",
+    st:"Part paid", cls:"warn",
+    hist:[["12 Mar 2026","Part payment","500.00"],["04 Jun 2026","Part payment","400.00"]]},
+  "BS-2026-01188": {owner:"Adwoa Mensimah", prop:"Four-bedroom residential house",
+    loc:"Besease — off the Bonwire road", zc:"Besease-Bonwire", use:"Residential", yr:"2026",
+    rv:"96,000.00", impost:"0.42%", annual:"403.00", paid:"403.00", bal:"0.00",
+    st:"Paid in full", cls:"ok",
+    hist:[["19 Feb 2026","Full payment","403.00"]]},
+  "ON-2026-00742": {owner:"Krapa Poultry Farms Ltd", prop:"Poultry sheds and store",
+    loc:"Onwe — Krapa road", zc:"Onwe", use:"Commercial / agricultural", yr:"2026",
+    rv:"310,000.00", impost:"0.85%", annual:"2,635.00", paid:"0.00", bal:"2,635.00",
+    st:"In arrears", cls:"crit", hist:[]},
+};
 
 const TOURISM = [
   {t:"Bonwire Kente Industry", s:"Bonwire", p:"The village whose looms gave Ghana its most recognisable cloth. Weavers work in open sheds along the main street, and visitors can watch a strip taken from warp to finished cloth — and try the loom themselves.", tags:["Craft","Living heritage","Shopping"], img:"loom"},
@@ -904,7 +1009,7 @@ function photo(key, cap, cls){
 
 /* Quick-action tiles — shown on Services and, in short form, across inner pages */
 const QUICK = [
-  ['Pay a rate or fee','Property rates, business permits and market tolls','#/services','pay'],
+  ['Pay a rate or fee','Check a property rate balance and settle it','#/rates','pay'],
   ['Apply for a permit','Business operating and building permits','#/services','permit'],
   ['Report a problem','Sanitation, drains, street lights, roads','#/issue','report'],
   ['Find a document','Budgets, by-laws, reports and forms','#/documents','doc'],
@@ -997,7 +1102,7 @@ PAGES[''] = PAGES['/'] = () => `
     <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:44px;align-items:start">
       <div>
         <div class="sec-head" style="margin-bottom:12px"><span class="eyebrow mono">Latest</span><h2>News &amp; public notices</h2></div>
-        ${NEWS.slice(0,4).map(n=>`
+        ${[...PUBLISHED, ...NEWS].slice(0,4).map(n=>`
         <article class="news-item">
           <div class="news-thumb">${scene(n.img, n.t)}<div class="datechip"><div class="d">${n.d}</div><div class="m">${n.m}</div></div></div>
           <div>
@@ -1314,13 +1419,13 @@ ${pageHead(['News &amp; Notices'],'News and Public Notices','Announcements, pres
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
       ${['All','Public Notice','Assembly Business','Projects','Procurement','Revenue','Tourism'].map((c,i)=>`<span class="tag" style="${i===0?'background:var(--forest);color:#fff;border-color:var(--forest)':''};cursor:pointer;padding:5px 13px">${c}</span>`).join('')}
     </div>
-    ${NEWS.map(n=>`
+    ${[...PUBLISHED, ...NEWS].map(n=>`
     <article class="news-item">
       <div class="news-thumb">${scene(n.img, n.t)}<div class="datechip"><div class="d">${n.d}</div><div class="m">${n.m}</div></div></div>
       <div>
         <h3>${esc(n.t)}</h3>
         <p>${esc(n.x)}</p>
-        <div class="meta"><span class="tag">${n.cat}</span>${n.pri?'<span class="pill crit">Priority notice</span>':''}<span style="font-size:.78rem;color:var(--muted)">${n.d} ${n.m} ${n.y}</span></div>
+        <div class="meta"><span class="tag">${n.cat}</span>${n.pri?'<span class="pill crit">Priority notice</span>':''}${n.fresh?'<span class="pill ok">Just published by you</span>':''}<span style="font-size:.78rem;color:var(--muted)">${n.d} ${n.m} ${n.y}</span></div>
       </div>
     </article>`).join('')}
   </div>
@@ -1461,7 +1566,7 @@ ${pageHead(['e-Services'],'Assembly Services','Permits, rates, registrations and
   <div class="notice green"><b>Ready for online payment.</b> The site is built so that payment of rates, permits and fees can be connected to the Government of Ghana&rsquo;s central payment platform, with automatic receipting. This is a priced option in the Andrastack proposal rather than part of the core scope, so the Assembly can commission it when it is ready.</div>
   <div class="grid g2">
     ${SERVICES.map(s=>`
-    <a class="tile" href="#/services" style="border-left-color:var(--forest)">
+    <a class="tile" href="${s.href||'#/services'}" style="border-left-color:var(--forest)">
       <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>
       <div><b>${s.t}</b><span>${s.d}</span><span style="margin-top:8px"><span class="tag">${s.tag}</span></span></div>
     </a>`).join('')}
@@ -1678,6 +1783,311 @@ ${pageHead(['Contact Us'],'Contact the Assembly','Offices, departments, the Info
   </aside>
 </div>`;
 
+/* ---------- STAFF DASHBOARD (admin mock) ---------- */
+PAGES['/admin'] = () => `
+${pageHead(['Staff dashboard'],'The Assembly&rsquo;s side of the website','What an authorised officer sees after signing in. Everything below is live in this demonstration &mdash; publish a notice and it appears on the public News page immediately.')}
+<div class="wrap" style="padding-block:30px 20px">
+  <div class="notice green"><b>This is the part that decides whether a website survives.</b> Most Assembly sites are not abandoned because they were badly built &mdash; they are abandoned because updating them needs a developer. Nothing on this screen does. Try it: write a notice, publish it, then open <a href="#/news">News &amp; Notices</a> and it will be at the top.</div>
+</div>
+<div class="wrap" style="padding-bottom:54px">
+  <div class="admin-shell">
+    <div class="admin-top">
+      <span class="brand">Ejisu MA &middot; Content Manager</span>
+      <span class="env">Demonstration</span>
+      <div class="admin-who">
+        <span>Information Unit &middot; Editor</span>
+        <span class="admin-avatar">IU</span>
+      </div>
+    </div>
+    <div class="admin-layout">
+      <nav class="admin-side">
+        <div class="grp">Content</div>
+        <a href="#/admin" class="on">Dashboard</a>
+        <a href="#/admin">News &amp; notices <span class="n">${NEWS.length + PUBLISHED.length}</span></a>
+        <a href="#/admin">Documents <span class="n">${DOCS.length}</span></a>
+        <a href="#/admin">Projects <span class="n">${PROJECTS.length}</span></a>
+        <a href="#/admin">Tenders <span class="n">${TENDERS.length}</span></a>
+        <a href="#/admin">Departments <span class="n">${DEPTS.length}</span></a>
+        <a href="#/admin">Pages <span class="n">14</span></a>
+        <div class="grp">Citizens</div>
+        <a href="#/admin">Reported issues <span class="n">7</span></a>
+        <a href="#/admin">Enquiries <span class="n">12</span></a>
+        <a href="#/admin">Subscribers <span class="n">318</span></a>
+        <div class="grp">Administration</div>
+        <a href="#/admin">Media library</a>
+        <a href="#/admin">Users &amp; roles</a>
+        <a href="#/admin">Backups</a>
+      </nav>
+      <div class="admin-main">
+        <div class="admin-h">Good morning, Information Unit</div>
+        <div class="admin-sub">Monday, 31 August 2026 &middot; last backup completed 02:00, restore tested 24 August</div>
+
+        <div class="kpis">
+          <div class="kpi"><div class="n">${5 + PUBLISHED.length}</div><div class="l">Notices this month</div><div class="d" style="color:var(--ok)">Target 4 &mdash; met</div></div>
+          <div class="kpi"><div class="n">7</div><div class="l">Issues awaiting action</div><div class="d" style="color:var(--warn)">2 over 5 working days</div></div>
+          <div class="kpi"><div class="n">2</div><div class="l">Tenders open</div><div class="d" style="color:var(--muted)">Next closes 11 Sep</div></div>
+          <div class="kpi"><div class="n">4,182</div><div class="l">Visits this month</div><div class="d" style="color:var(--ok)">83% on a phone</div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h">
+            <h4>Publish a public notice</h4>
+            <div class="timer" id="timerBox"><span class="dot"></span><span id="composeTimer">0:00</span></div>
+          </div>
+          <div class="panel-b">
+            <div class="pubok" id="pubOk" hidden>
+              <h5>Published to the public website</h5>
+              <span class="big" id="pubTime">&mdash;</span>
+              <p>Start to finish, with no developer involved. <a href="#/news">Open News &amp; Notices</a> to see it live at the top of the list.</p>
+            </div>
+            <div class="err" id="nErr" hidden></div>
+            <div class="formgrid">
+              <div class="field full"><label for="nTitle">Notice title <span class="req">*</span></label>
+                <input id="nTitle" placeholder="e.g. Revenue office to open on Saturdays through September" oninput="startComposeTimer()"></div>
+              <div class="field"><label for="nCat">Category</label>
+                <select id="nCat">${['Public Notice','Assembly Business','Projects','Procurement','Revenue','Tourism','Health &amp; Sanitation'].map(c=>`<option>${c}</option>`).join('')}</select></div>
+              <div class="field"><label for="nDate">Publish</label>
+                <select id="nDate"><option>Immediately</option><option>Schedule for a later date</option></select></div>
+              <div class="field full"><label for="nBody">Body of the notice <span class="req">*</span></label>
+                <textarea id="nBody" placeholder="Write it the way you would write it for the notice board." oninput="startComposeTimer()"></textarea></div>
+              <div class="field full">
+                <label class="chk"><input type="checkbox" id="nPri"> Mark as a priority notice (shown with a red flag and pinned to the home page)</label>
+              </div>
+              <div class="field full actrow">
+                <button class="btn btn-primary" onclick="publishNotice()">Publish now</button>
+                <button class="btn btn-ghost" onclick="document.getElementById('nErr').hidden=true">Save as draft</button>
+                <span style="font-size:.8rem;color:var(--muted)">Attachments, a featured image and an expiry date are also available on this screen in the delivered site.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h4>Issues reported by residents</h4>
+            <span class="tag" style="margin-left:auto">Routed automatically by category</span></div>
+          <div class="tablewrap" style="border:0;border-radius:0">
+            <table>
+              <thead><tr><th>Reference</th><th>Category</th><th>Community</th><th>Department</th><th>Age</th><th>Status</th></tr></thead>
+              <tbody>
+                ${[['EMA-2026-04871','Choked drain','Besease','Works','2 days','Assigned','info'],
+                   ['EMA-2026-04868','Uncollected refuse','Ejisu — market','Environmental Health','3 days','On site','warn'],
+                   ['EMA-2026-04861','Broken street light','Bonwire','Works','6 days','Overdue','crit'],
+                   ['EMA-2026-04855','Pothole and failed culvert','Onwe – Krapa','Works','7 days','Overdue','crit'],
+                   ['EMA-2026-04849','Unauthorised development','Kwaso','Physical Planning','9 days','Resolved','ok']].map(([r,c,l,d,a,st,cls])=>`
+                <tr><td style="font-family:var(--f-mono);font-size:.8rem;white-space:nowrap">${r}</td><td>${c}</td><td>${l}</td><td>${d}</td><td style="white-space:nowrap">${a}</td><td><span class="pill ${cls}">${st}</span></td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-h"><h4>Who can do what</h4></div>
+          <div class="panel-b">
+            <div class="tablewrap" style="border:0">
+              <table>
+                <thead><tr><th>Role</th><th>Typically held by</th><th>Can do</th></tr></thead>
+                <tbody>
+                  <tr><td><b style="color:var(--text)">Administrator</b></td><td>MIS Unit</td><td>Everything, including user accounts, backups and site settings</td></tr>
+                  <tr><td><b style="color:var(--text)">Editor</b></td><td>Public Relations / Information Unit</td><td>Publish and edit anything on the site; approve what Authors submit</td></tr>
+                  <tr><td><b style="color:var(--text)">Author</b></td><td>Planning, Works, Finance, Procurement</td><td>Publish within their own department&rsquo;s section only</td></tr>
+                  <tr><td><b style="color:var(--text)">Contributor</b></td><td>Zonal council officers</td><td>Submit drafts for an Editor to approve; cannot publish directly</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:.85rem;color:var(--muted);margin-top:14px">Departments keep their own pages current without anyone being able to damage the rest of the site. Every change is versioned and can be rolled back.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ${quickStrip(['doc','build','report','info'])}
+</div>`;
+
+/* ---------- PROPERTY RATE LOOKUP ---------- */
+PAGES['/rates'] = () => `
+${pageHead([{t:'e-Services',h:'#/services'},'Property Rate Lookup'],'Property Rate Lookup','Check what is assessed on a property, what has been paid, and what is outstanding.')}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    <div class="notice green"><b>Why the Assembly should care about this screen.</b> Internally generated funds are <b>26.3%</b> of the Assembly&rsquo;s receipts &mdash; the only portion it controls directly. Rate payers who can see what they owe, at any hour, without travelling to the revenue office, pay more often and argue less. This screen is the cheapest collection officer the Assembly will ever employ.</div>
+
+    <div class="rate-search">
+      <input id="rateInput" placeholder="Property number, e.g. EJ-2026-04417" aria-label="Property number"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();lookupRate()}">
+      <button class="btn btn-primary" onclick="lookupRate()">Check this property</button>
+    </div>
+    <div class="samples">
+      <span class="lab">Try one:</span>
+      ${Object.keys(RATEBOOK).map(k=>`<button class="samp" onclick="lookupRate('${k}')">${k}</button>`).join('')}
+    </div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:10px">Your property number is printed at the top right of your rate demand notice.</p>
+
+    <div id="rateResult"></div>
+
+    <div class="quickstrip">
+      <div class="qs-head mono">How this works in the delivered site</div>
+      <div class="grid g3">
+        <div class="card"><h3 style="font-size:1rem">Reads the Assembly&rsquo;s own valuation list</h3><p>The lookup runs against the rate register the Finance Department already maintains. No second set of records to keep.</p></div>
+        <div class="card"><h3 style="font-size:1rem">Payment is a priced option</h3><p>Connecting collection to the Government of Ghana payment platform, with automatic receipting, is item A in the Andrastack proposal &mdash; commissioned when the Assembly is ready.</p></div>
+        <div class="card"><h3 style="font-size:1rem">Enquiry works from day one</h3><p>Even without payment connected, a rate payer can confirm the balance before walking into the revenue office. That alone shortens the queue.</p></div>
+      </div>
+    </div>
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Where the money goes</h4>
+      <div class="kv"><span>Internally generated</span><b>26.3%</b></div>
+      <div class="kv"><span>Common Fund</span><b>30.9%</b></div>
+      <div class="kv"><span>Government transfers</span><b>38.1%</b></div>
+      <div class="kv"><span>Other grants</span><b>4.7%</b></div>
+      <p style="font-size:.8rem;color:var(--muted);margin-top:12px">2024 composite budget. Property rates, business operating permits and market tolls make up the internally generated share.</p>
+    </div>
+    <div class="box">
+      <h4>Rate payer help</h4>
+      <ul>
+        <li><a href="#/documents">Schedule of rates and fees, 2026</a></li>
+        <li><a href="#/services">Business operating permits</a></li>
+        <li><a href="#/contact">Revenue office &mdash; contact</a></li>
+        <li><a href="#/issue">Report an error on a demand notice</a></li>
+      </ul>
+    </div>
+    <div class="box" style="padding:0;overflow:hidden">${photo('records',null,'ratio-4 square')}</div>
+  </aside>
+</div>`;
+
+function renderRate(id, r){
+  const owing = r.bal !== "0.00";
+  return `
+  <div class="ratecard">
+    <div class="rh">
+      <span class="id">${id}</span>
+      <span style="opacity:.85;font-size:.86rem">Rate year ${r.yr}</span>
+      <span class="sp"><span class="pill ${r.cls}" style="background:rgba(255,255,255,.16);color:#fff">${r.st}</span></span>
+    </div>
+    <div class="rategrid">
+      <div class="cell"><div class="k">Rate payer</div><div class="v">${r.owner}</div></div>
+      <div class="cell"><div class="k">Property</div><div class="v">${r.prop}</div></div>
+      <div class="cell"><div class="k">Location</div><div class="v">${r.loc}</div></div>
+      <div class="cell"><div class="k">Zonal council</div><div class="v">${r.zc}</div></div>
+      <div class="cell"><div class="k">Use class</div><div class="v">${r.use}</div></div>
+      <div class="cell"><div class="k">Rateable value</div><div class="v mono">GHS ${r.rv}</div></div>
+      <div class="cell"><div class="k">Rate impost</div><div class="v mono">${r.impost}</div></div>
+      <div class="cell"><div class="k">Rate for ${r.yr}</div><div class="v mono">GHS ${r.annual}</div></div>
+    </div>
+    <div class="balance">
+      <div><div class="lbl">Paid to date</div><div class="amt" style="color:var(--ok)">GHS ${r.paid}</div></div>
+      <div><div class="lbl">Outstanding</div><div class="amt" style="color:${owing?'var(--clay)':'var(--ok)'}">GHS ${r.bal}</div></div>
+      ${owing?`<div style="margin-left:auto"><button class="btn btn-gold" onclick="document.getElementById('payPanel').hidden=false;document.getElementById('payPanel').scrollIntoView({behavior:'smooth',block:'nearest'})">Pay this balance</button></div>`:
+        `<div style="margin-left:auto;font-size:.88rem;color:var(--ok);font-weight:600">Nothing outstanding &mdash; thank you.</div>`}
+    </div>
+    ${r.hist.length?`<div class="panel-b" style="border-top:1px solid var(--line)">
+      <div class="mono" style="color:var(--gold);margin-bottom:10px">Payment history</div>
+      ${r.hist.map(([d,k,a])=>`<div class="receipt-line" style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:.88rem">
+        <span style="color:var(--muted)">${d} &middot; ${k}</span><b style="font-variant-numeric:tabular-nums">GHS ${a}</b></div>`).join('')}
+    </div>`:''}
+  </div>
+
+  ${owing?`
+  <div class="paybox" id="payPanel" hidden>
+    <h3 style="font-family:var(--f-display);font-size:1.12rem;margin-bottom:4px">Pay GHS ${r.bal}</h3>
+    <p style="font-size:.86rem;color:var(--text-2);margin-bottom:4px">Choose how you would like to pay. You will receive an official receipt by SMS and e-mail.</p>
+    <div class="chan">
+      <label><input type="radio" name="paych" value="Mobile money" checked><span><b>Mobile money</b><span>MTN, Telecel or AirtelTigo</span></span></label>
+      <label><input type="radio" name="paych" value="Bank transfer"><span><b>Bank transfer</b><span>To the Assembly&rsquo;s revenue account</span></span></label>
+      <label><input type="radio" name="paych" value="At the revenue office"><span><b>At the revenue office</b><span>Generate a payment slip to present</span></span></label>
+    </div>
+    <button class="btn btn-primary" onclick="payRate('${id}')">Continue</button>
+    <p style="font-size:.79rem;color:var(--muted);margin-top:12px"><b>Demonstration only.</b> No payment is taken and nothing is submitted. In the delivered site this step hands over to the Government of Ghana payment platform &mdash; a priced option in the Andrastack proposal, not part of the core scope.</p>
+    <div id="payOut"></div>
+  </div>`:''}`;
+}
+
+function lookupRate(id){
+  const inp = document.getElementById('rateInput');
+  id = (id || (inp ? inp.value : '') || '').trim().toUpperCase();
+  if(inp) inp.value = id;
+  const out = document.getElementById('rateResult');
+  if(!out) return;
+  if(!id){ out.innerHTML = `<div class="notice" style="margin-top:22px"><b>Enter a property number to begin.</b> You can also click one of the sample numbers above.</div>`; return; }
+  const r = RATEBOOK[id];
+  if(!r){
+    out.innerHTML = `<div class="notice" style="margin-top:22px;border-left-color:var(--clay);background:var(--clay-soft)">
+      <b>No property found for &ldquo;${esc(id)}&rdquo;.</b> Check the number printed on your rate demand notice. If you believe the number is correct,
+      <a href="#/issue">tell the Assembly</a> and the Finance Department will look into it.</div>`;
+    return;
+  }
+  out.innerHTML = renderRate(id, r);
+}
+
+function payRate(id){
+  const r = RATEBOOK[id];
+  const sel = document.querySelector('input[name="paych"]:checked');
+  const chan = sel ? sel.value : 'Mobile money';
+  const ref = 'EMA-RCT-2026-' + String(10000 + Math.floor(Math.random()*89999));
+  const out = document.getElementById('payOut');
+  if(!out) return;
+  out.innerHTML = `
+  <div class="receipt">
+    <div class="rt">Payment reference issued</div>
+    <div class="rb">
+      <div class="line"><span style="color:var(--muted)">Reference</span><b style="font-family:var(--f-mono)">${ref}</b></div>
+      <div class="line"><span style="color:var(--muted)">Property</span><b>${id}</b></div>
+      <div class="line"><span style="color:var(--muted)">Rate payer</span><b>${r.owner}</b></div>
+      <div class="line"><span style="color:var(--muted)">Method</span><b>${chan}</b></div>
+      <div class="line"><span style="color:var(--muted)">Amount</span><b>GHS ${r.bal}</b></div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:14px">In the delivered site the rate payer is now handed to the payment platform, and on completion the receipt is issued automatically and the balance on this page updates. Nothing has been charged in this demonstration.</p>
+    </div>
+  </div>`;
+  out.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+/* ---------- notice composer ---------- */
+function startComposeTimer(){
+  if(T0) return;
+  T0 = Date.now();
+  const box = document.getElementById('timerBox');
+  if(box) box.classList.add('run');
+  TIMER_ID = setInterval(()=>{
+    const el = document.getElementById('composeTimer');
+    if(!el){ clearInterval(TIMER_ID); TIMER_ID = null; return; }
+    const s = Math.floor((Date.now()-T0)/1000);
+    el.textContent = Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+  }, 250);
+}
+
+function publishNotice(){
+  const t = document.getElementById('nTitle').value.trim();
+  const b = document.getElementById('nBody').value.trim();
+  const c = document.getElementById('nCat').value;
+  const pri = document.getElementById('nPri').checked;
+  const err = document.getElementById('nErr');
+  if(!t || !b){
+    err.hidden = false;
+    err.textContent = !t ? 'Give the notice a title before publishing it.' : 'Add the body of the notice before publishing it.';
+    return;
+  }
+  err.hidden = true;
+  const secs = T0 ? Math.max(1, Math.round((Date.now()-T0)/1000)) : 0;
+  const now = new Date();
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  PUBLISHED.unshift({
+    d: String(now.getDate()).padStart(2,'0'), m: M[now.getMonth()], y: String(now.getFullYear()),
+    cat: c.replace('&amp;','&'), t: t, x: b, pri: pri, img: CAT_IMG[c.replace('&amp;','&')] || 'records', fresh: true
+  });
+  if(TIMER_ID){ clearInterval(TIMER_ID); TIMER_ID = null; }
+  const box = document.getElementById('timerBox');
+  if(box) box.classList.remove('run');
+  const mins = Math.floor(secs/60), rem = secs%60;
+  document.getElementById('pubTime').textContent = mins ? (mins + ' min ' + rem + ' sec') : (secs + ' seconds');
+  document.getElementById('pubOk').hidden = false;
+  document.getElementById('pubOk').scrollIntoView({behavior:'smooth', block:'nearest'});
+  T0 = null;
+  document.getElementById('nTitle').value = '';
+  document.getElementById('nBody').value = '';
+  document.getElementById('nPri').checked = false;
+  const el = document.getElementById('composeTimer');
+  if(el) el.textContent = '0:00';
+}
+
 /* ==================== ROUTER ==================== */
 function buildNav(){
   const cur = location.hash.replace(/^#/,'') || '/';
@@ -1712,6 +2122,8 @@ document.addEventListener('click', e=>{
 });
 
 function render(){
+  if(TIMER_ID){ clearInterval(TIMER_ID); TIMER_ID = null; }
+  T0 = null;
   const path = location.hash.replace(/^#/,'') || '/';
   const page = PAGES[path] || (()=>`
     ${pageHead(['Page not found'],'This page is not part of the demonstration','The navigation of the delivered site covers all fourteen sections set out in the proposal.')}

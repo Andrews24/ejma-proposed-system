@@ -158,6 +158,57 @@ nav.main .wrap{display:flex;gap:2px;align-items:stretch;flex-wrap:wrap}
 .search-sheet input{flex:1;padding:11px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--text);font:inherit;font-size:.95rem}
 .search-sheet input:focus{outline:2px solid var(--gold-2);outline-offset:-1px;border-color:transparent}
 
+/* ===== PRIORITY / ANNOUNCEMENT BANNER ===== */
+.alertbar{background:linear-gradient(90deg,var(--clay) 0%,#A8532F 100%);color:#fff}
+.alertbar .wrap{display:flex;align-items:center;gap:14px;padding-block:11px}
+.alertbar .ic{width:26px;height:26px;flex:none;display:grid;place-items:center;background:rgba(255,255,255,.18);border-radius:50%}
+.alertbar .ic svg{width:15px;height:15px}
+.alertbar .tx{font-size:.875rem;line-height:1.45;min-width:0}
+.alertbar .tx b{display:block;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;opacity:.85;margin-bottom:2px}
+.alertbar a.more{color:#fff;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;font-weight:600;font-size:.83rem}
+.alertbar button{color:#fff;opacity:.75;flex:none;font-size:1.15rem;line-height:1;padding:0 4px}
+.alertbar button:hover{opacity:1}
+.alertbar .sp{margin-left:auto;display:flex;align-items:center;gap:14px;flex:none}
+@media(max-width:640px){.alertbar .sp{margin-left:0;width:100%;justify-content:space-between}.alertbar .wrap{flex-wrap:wrap}}
+
+/* ===== HERO SEARCH ===== */
+.hero-search{margin-top:30px;max-width:560px}
+.hero-search form{display:flex;gap:0;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(0,0,0,.55)}
+.hero-search input{flex:1;border:0;padding:15px 18px;font:inherit;font-size:1rem;color:#141B17;background:#fff;min-width:0}
+.hero-search input:focus{outline:2px solid var(--gold-2);outline-offset:-2px}
+.hero-search button{background:var(--gold);color:#1A1204;padding:0 22px;font-weight:700;font-size:.92rem;display:flex;align-items:center;gap:8px}
+.hero-search button:hover{background:var(--gold-2)}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;align-items:center}
+.hero-chips .lb{font-size:.79rem;color:#A9C0B2}
+.hero-chips button{font-size:.79rem;padding:5px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.28);color:#DCEAE1;background:rgba(255,255,255,.06)}
+.hero-chips button:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5);color:#fff}
+
+/* ===== MOTION ===== */
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero-eyebrow,.hero h1,.hero p.lead,.hero-search,.hero-chips,.hero-actions{animation:riseIn .75s cubic-bezier(.22,1,.36,1) both}
+.hero h1{animation-delay:.08s}
+.hero p.lead{animation-delay:.16s}
+.hero-search{animation-delay:.24s}
+.hero-chips{animation-delay:.30s}
+.hero-actions{animation-delay:.36s}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none}
+  .hero-eyebrow,.hero h1,.hero p.lead,.hero-search,.hero-chips,.hero-actions{animation:none}
+}
+
+/* ===== SEARCH RESULTS ===== */
+.sr-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.sr-count{font-size:.86rem;color:var(--muted)}
+.sr-group{margin-top:30px}
+.sr-group h3{font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;color:var(--gold);font-family:var(--f-body);font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.sr-item{display:block;padding:13px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:9px}
+.sr-item:hover{border-color:var(--forest);background:var(--forest-soft);text-decoration:none}
+.sr-item b{display:block;font-size:.96rem;color:var(--text);font-weight:600}
+.sr-item span{display:block;font-size:.85rem;color:var(--muted);margin-top:3px;line-height:1.5}
+.sr-item mark{background:var(--gold-soft);color:var(--text);padding:0 2px;border-radius:2px;font-weight:600}
+
 /* ============ HERO ============ */
 .hero{position:relative;overflow:hidden;background:var(--forest-2);color:#EAF2ED;isolation:isolate}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-2;opacity:.5}
@@ -534,14 +585,15 @@ footer.site .about p{font-size:.885rem;line-height:1.65;color:#A9C0B2;max-width:
   <nav class="main" id="mainNav" aria-label="Main"><div class="wrap" id="navWrap"></div></nav>
   <div class="search-sheet" id="searchSheet" hidden>
     <div class="wrap">
-      <form onsubmit="event.preventDefault();alert('Search is illustrative in this demonstration. The delivered site includes full-text search across pages, news, documents and projects.')">
-        <input type="search" placeholder="Search notices, documents, projects, departments&hellip;" aria-label="Search the site">
+      <form onsubmit="event.preventDefault();goSearch(this.querySelector('input').value)">
+        <input type="search" id="hdrSearch" placeholder="Search notices, documents, projects, departments&hellip;" aria-label="Search the site">
         <button class="btn btn-primary" type="submit">Search</button>
       </form>
     </div>
   </div>
 </header>
 <div class="kente-rule" aria-hidden="true"></div>
+<div id="alertBar"></div>
 
 <main id="main"></main>
 
@@ -1091,6 +1143,20 @@ PAGES[''] = PAGES['/'] = () => `
     <div class="hero-eyebrow mono">Ashanti Region &middot; Republic of Ghana</div>
     <h1>The Assembly at the heart of Asante country.</h1>
     <p class="lead">Ejisu Municipal Assembly serves 181,723 residents across 93 communities and five zonal councils &mdash; home of the Bonwire loom, of Yaa Asantewaa, and of the Bobiri forest. This is where you find our decisions, our accounts, our projects and our people.</p>
+    <div class="hero-search">
+      <form onsubmit="event.preventDefault();goSearch(this.querySelector('input').value)">
+        <input type="search" placeholder="What do you need from the Assembly?" aria-label="Search the Assembly website">
+        <button type="submit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          Search
+        </button>
+      </form>
+      <div class="hero-chips">
+        <span class="lb">Most looked for:</span>
+        ${['property rate','building permit','composite budget','tender']
+          .map(t=>`<button type="button" onclick="goSearch('${t}')">${t}</button>`).join('')}
+      </div>
+    </div>
     <div class="hero-actions">
       <a class="btn btn-gold" href="#/services">Use an Assembly service</a>
       <a class="btn btn-ghost" href="#/projects">See what we are building</a>
@@ -1100,13 +1166,13 @@ PAGES[''] = PAGES['/'] = () => `
 </section>
 
 <div class="statstrip"><div class="wrap">
-  <div class="stat"><div class="n">181,723</div><div class="l">Residents</div><div class="s">2021 Population &amp; Housing Census</div></div>
-  <div class="stat"><div class="n">93</div><div class="l">Communities</div><div class="s">Across five zonal councils</div></div>
-  <div class="stat"><div class="n">28</div><div class="l">Electoral areas</div><div class="s">42 Assembly members in total</div></div>
-  <div class="stat"><div class="n">224</div><div class="l">Square kilometres</div><div class="s">17 km east of Kumasi</div></div>
+  <div class="stat"><div class="n" data-count="181723">0</div><div class="l">Residents</div><div class="s">2021 Population &amp; Housing Census</div></div>
+  <div class="stat"><div class="n" data-count="93">0</div><div class="l">Communities</div><div class="s">Across five zonal councils</div></div>
+  <div class="stat"><div class="n" data-count="28">0</div><div class="l">Electoral areas</div><div class="s">42 Assembly members in total</div></div>
+  <div class="stat"><div class="n" data-count="224">0</div><div class="l">Square kilometres</div><div class="s">17 km east of Kumasi</div></div>
 </div></div>
 
-<section class="band">
+<section class="band reveal">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow mono">The Municipality</span>
       <h2>Ninety-three communities, one Assembly</h2>
@@ -1126,7 +1192,7 @@ PAGES[''] = PAGES['/'] = () => `
   </div>
 </section>
 
-<section class="band alt">
+<section class="band alt reveal">
   <div class="wrap">
     <div class="grid" style="grid-template-columns:1.6fr 1fr;gap:44px;align-items:start">
       <div>
@@ -1168,7 +1234,7 @@ PAGES[''] = PAGES['/'] = () => `
   </div>
 </section>
 
-<section class="band">
+<section class="band reveal">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow mono">Discover Ejisu</span>
       <h2>A Municipality that gave Ghana its cloth and one of its greatest leaders</h2>
@@ -1179,7 +1245,7 @@ PAGES[''] = PAGES['/'] = () => `
   </div>
 </section>
 
-<section class="band alt">
+<section class="band alt reveal">
   <div class="wrap">
     <div class="grid g2" style="gap:40px;align-items:center">
       <div>
@@ -2192,6 +2258,120 @@ function publishNotice(){
   if(el) el.textContent = '0:00';
 }
 
+/* ==================== SEARCH ==================== */
+const PAGE_META = [
+  ['Home','#/','The Assembly at the heart of Asante country'],
+  ['About the Municipality','#/about','Profile, vision, mission, functions, economy and statistics of the Ejisu Municipal Assembly'],
+  ['Leadership','#/leadership','Municipal Chief Executive, Presiding Member, Coordinating Director and the General Assembly'],
+  ['Departments and Units','#/departments','Fourteen departments and units delivering the Assembly statutory functions'],
+  ['Sub-District Structures','#/zonal','Five zonal councils, 93 communities and 28 electoral areas'],
+  ['News and Public Notices','#/news','Announcements, press releases, Assembly business and public notices'],
+  ['Development Project Register','#/projects','Projects, locations, contractors, cost, funding source and status'],
+  ['Documents and Downloads','#/documents','Budgets, by-laws, resolutions, reports, plans and application forms'],
+  ['Procurement and Tenders','#/tenders','Open invitations to tender and contracts awarded'],
+  ['Assembly Services','#/services','Permits, rates, registrations and requests'],
+  ['Property Rate Lookup','#/rates','Check a property rate assessment, payments and outstanding balance'],
+  ['Report an Issue','#/issue','Sanitation, drains, street lights, roads and unauthorised development'],
+  ['Tourism and Culture','#/tourism','Bonwire kente, Yaa Asantewaa, Bobiri Forest Reserve and Butterfly Sanctuary'],
+  ['Invest in Ejisu','#/invest','Investment profile, land, agribusiness, logistics and incentives'],
+  ['Contact the Assembly','#/contact','Offices, departments, the Information Officer and Right to Information'],
+  ['Staff sign-in','#/admin','Content manager for authorised officers of the Assembly'],
+];
+
+function buildIndex(){
+  const ix = [];
+  const add = (type, title, body, href) => ix.push({type, title, body, href, hay:(title+' '+body+' '+type).toLowerCase()});
+  PAGE_META.forEach(([t,h,d]) => add('Pages', t, d, h));
+  [...PUBLISHED, ...NEWS].forEach(n => add('News & notices', n.t, n.x + ' ' + n.cat, '#/news'));
+  DOCS.forEach(d => add('Documents', d.t, d.c + ' — ' + d.ft + ', ' + d.sz + ', published ' + d.d, '#/documents'));
+  PROJECTS.forEach(p => add('Projects', p.t, p.loc + ' · ' + p.zc + ' · ' + p.src + ' · GHS ' + p.cost + ' · ' + p.st, '#/projects'));
+  TENDERS.forEach(t => add('Tenders', t.t, t.ref + ' · ' + t.m + ' · closes ' + t.close + ' · ' + t.st, '#/tenders'));
+  DEPTS.forEach(d => add('Departments', d.n, d.d + ' ' + d.u.join(' '), '#/departments'));
+  ZONAL.forEach(z => add('Sub-district', z.n, z.s + ' · ' + z.c + ' communities', '#/zonal'));
+  TOURISM.forEach(t => add('Tourism', t.t, t.s + ' — ' + t.p, '#/tourism'));
+  SERVICES.forEach(v => add('Services', v.t, v.d, v.href || '#/services'));
+  Object.keys(RATEBOOK).forEach(k => { const r = RATEBOOK[k];
+    add('Property rates', k, r.owner + ' · ' + r.prop + ' · ' + r.loc, '#/rates'); });
+  return ix;
+}
+
+function runSearch(q){
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!terms.length) return [];
+  return buildIndex().map(e => {
+    let score = 0;
+    for(const t of terms){
+      if(!e.hay.includes(t)) return null;
+      if(e.title.toLowerCase().includes(t)) score += 3;
+      score += 1;
+    }
+    if(e.title.toLowerCase().startsWith(terms[0])) score += 4;
+    return {...e, score};
+  }).filter(Boolean).sort((a,b) => b.score - a.score);
+}
+
+function hl(text, q){
+  const terms = q.toLowerCase().split(/\s+/).filter(Boolean).sort((a,b)=>b.length-a.length);
+  let out = esc(text);
+  for(const t of terms){
+    const re = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'ig');
+    out = out.replace(re, '<mark>$1</mark>');
+  }
+  return out;
+}
+
+function goSearch(q){
+  q = (q || '').trim();
+  if(!q) return;
+  const sheet = document.getElementById('searchSheet');
+  if(sheet) sheet.hidden = true;
+  location.hash = '/search/' + encodeURIComponent(q);
+}
+
+function searchPage(q){
+  const hits = runSearch(q);
+  const groups = {};
+  hits.forEach(h => { (groups[h.type] = groups[h.type] || []).push(h); });
+  const order = ['Pages','News & notices','Services','Documents','Projects','Tenders','Departments','Sub-district','Tourism','Property rates'];
+  return `
+${pageHead(['Search'],'Search results', null)}
+<div class="wrap pagegrid">
+  <div style="min-width:0">
+    <div class="rate-search" style="margin-bottom:18px">
+      <input id="srInput" value="${esc(q)}" aria-label="Search the site" style="font-family:var(--f-body);letter-spacing:0"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();goSearch(this.value)}">
+      <button class="btn btn-primary" onclick="goSearch(document.getElementById('srInput').value)">Search</button>
+    </div>
+    <div class="sr-head">
+      <span class="sr-count">${hits.length === 0 ? 'No matches' : hits.length + (hits.length === 1 ? ' result' : ' results')} for &ldquo;<b style="color:var(--text)">${esc(q)}</b>&rdquo;</span>
+    </div>
+    ${hits.length === 0 ? `
+      <div class="notice" style="margin-top:20px"><b>Nothing matched that.</b> Try a shorter word, or one of the suggestions on the right. Search covers pages, news and notices, documents, projects, tenders, departments, zonal councils and services.</div>
+    ` : order.filter(g => groups[g]).map(g => `
+      <div class="sr-group">
+        <h3>${g} <span style="color:var(--muted);font-weight:600">(${groups[g].length})</span></h3>
+        ${groups[g].slice(0,8).map(h => `
+        <a class="sr-item" href="${h.href}">
+          <b>${hl(h.title, q)}</b>
+          <span>${hl(h.body.length > 165 ? h.body.slice(0,165) + '…' : h.body, q)}</span>
+        </a>`).join('')}
+        ${groups[g].length > 8 ? `<p style="font-size:.82rem;color:var(--muted);margin-top:6px">and ${groups[g].length - 8} more</p>` : ''}
+      </div>`).join('')}
+  </div>
+  <aside>
+    <div class="box">
+      <h4>Popular searches</h4>
+      <ul>${['property rate','building permit','composite budget','tender','sanitation','Bonwire','fee-fixing','Right to Information']
+        .map(t => `<li><a href="#" onclick="event.preventDefault();goSearch('${t}')">${t}</a></li>`).join('')}</ul>
+    </div>
+    <div class="box">
+      <h4>What search covers</h4>
+      <p style="font-size:.86rem;color:var(--muted);line-height:1.6">Every page, every published notice, every document in the library, the project register, open and awarded tenders, all fourteen departments, the five zonal councils and the service list &mdash; searched together.</p>
+    </div>
+  </aside>
+</div>`;
+}
+
 /* ==================== ROUTER ==================== */
 function buildNav(){
   const cur = location.hash.replace(/^#/,'') || '/';
@@ -2225,21 +2405,89 @@ document.addEventListener('click', e=>{
   if(!e.target.closest('.nav-item')) document.querySelectorAll('.nav-item').forEach(n=>n.dataset.open='0');
 });
 
+let ALERT_DISMISSED = false;
+
+function renderAlertBar(){
+  const host = document.getElementById('alertBar');
+  if(!host) return;
+  const pri = [...PUBLISHED, ...NEWS].find(n => n.pri);
+  if(!pri || ALERT_DISMISSED){ host.innerHTML = ''; return; }
+  host.innerHTML = `
+  <div class="alertbar">
+    <div class="wrap">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3 2.5 20h19z"/><path d="M12 10v4.2"/><circle cx="12" cy="17.2" r=".9" fill="currentColor" stroke="none"/></svg></span>
+      <span class="tx"><b>Public notice &middot; ${pri.d} ${pri.m} ${pri.y}</b>${esc(pri.t)}</span>
+      <span class="sp">
+        <a class="more" href="#/news">Read the notice</a>
+        <button type="button" aria-label="Dismiss notice" onclick="ALERT_DISMISSED=true;renderAlertBar()">&times;</button>
+      </span>
+    </div>
+  </div>`;
+}
+
+let IO = null;
+function wireMotion(){
+  if(IO) IO.disconnect();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  const counts = document.querySelectorAll('[data-count]');
+  if(reduce || !('IntersectionObserver' in window)){
+    reveals.forEach(el => el.classList.add('in'));
+    counts.forEach(el => el.textContent = Number(el.dataset.count).toLocaleString('en-GB'));
+    return;
+  }
+  IO = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      const el = en.target;
+      IO.unobserve(el);
+      if(el.classList.contains('reveal')) el.classList.add('in');
+      if(el.dataset.count) countUp(el, Number(el.dataset.count));
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  reveals.forEach(el => IO.observe(el));
+  counts.forEach(el => IO.observe(el));
+}
+
+function countUp(el, target){
+  const dur = 1100, t0 = performance.now();
+  const step = (now) => {
+    const p = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(target * e).toLocaleString('en-GB');
+    if(p < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('en-GB');
+  };
+  requestAnimationFrame(step);
+}
+
 function render(){
   if(TIMER_ID){ clearInterval(TIMER_ID); TIMER_ID = null; }
   T0 = null;
   const path = location.hash.replace(/^#/,'') || '/';
+  if(path.startsWith('/search/')){
+    const q = decodeURIComponent(path.slice(8));
+    document.getElementById('main').innerHTML = searchPage(q);
+    buildNav();
+    renderAlertBar();
+    document.getElementById('mainNav').classList.remove('open');
+    window.scrollTo({top:0,behavior:'instant'});
+    wireMotion();
+    return;
+  }
   const page = PAGES[path] || (()=>`
     ${pageHead(['Page not found'],'This page is not part of the demonstration','The navigation of the delivered site covers all fourteen sections set out in the proposal.')}
     <div class="wrap" style="padding-block:40px 70px"><a class="btn btn-primary" href="#/">Return to the home page</a></div>`);
   document.getElementById('main').innerHTML = page();
   buildNav();
+  renderAlertBar();
   document.getElementById('mainNav').classList.remove('open');
   document.getElementById('burger').setAttribute('aria-expanded','false');
   window.scrollTo({top:0,behavior:'instant'});
   requestAnimationFrame(()=>{
     document.querySelectorAll('.bar-fill').forEach(b=>{ b.style.width = b.dataset.w + '%'; });
   });
+  wireMotion();
   if(path==='/'||path==='') drawKente();
 }
 

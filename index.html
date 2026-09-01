@@ -370,6 +370,22 @@ td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .chk input{width:16px;height:16px;accent-color:var(--forest)}
 .actrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px}
 
+/* ===== STAFF SIGN-IN (mock) ===== */
+.login-wrap{display:grid;place-items:center;padding:10px 0 60px}
+.login-card{width:100%;max-width:430px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);overflow:hidden}
+.login-head{background:#0E2A21;color:#fff;padding:24px 24px 20px;text-align:center}
+.login-head .nm{font-family:var(--f-display);font-size:1.1rem;font-weight:600;margin-top:10px}
+.login-head .sb{font-size:.75rem;letter-spacing:.11em;text-transform:uppercase;color:#8FB6A0;margin-top:5px;font-weight:600}
+.login-body{padding:24px}
+.login-body .field{margin-bottom:15px}
+.cred{background:var(--gold-soft);border:1px dashed var(--gold-2);border-radius:var(--r);padding:12px 14px;margin-bottom:18px;font-size:.82rem;color:var(--text-2);line-height:1.6}
+.cred b{display:block;color:var(--text);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.cred code{font-family:var(--f-mono);background:var(--surface);border:1px solid var(--line);padding:2px 7px;border-radius:3px;font-size:.85rem;color:var(--forest);font-weight:600}
+.login-foot{padding:14px 24px;border-top:1px solid var(--line-soft);background:var(--surface-2);font-size:.8rem;color:var(--muted);text-align:center}
+.signout{margin-left:12px;font-size:.78rem;color:#B6CCC0;border:1px solid rgba(255,255,255,.22);padding:5px 12px;border-radius:100px}
+.signout:hover{background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
+.dangerrow{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+
 /* ===== RATE LOOKUP ===== */
 .rate-search{display:flex;gap:10px;flex-wrap:wrap}
 .rate-search input{flex:1;min-width:230px;padding:13px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--text);font:inherit;font-size:1rem;font-family:var(--f-mono);letter-spacing:.04em}
@@ -699,6 +715,19 @@ const SERVICES = [
 ];
 
 /* Runtime state for the demonstration */
+const LS_NOTICES = 'ema-demo-notices';
+const SS_SIGNIN  = 'ema-demo-signedin';
+const DEMO_USER  = 'information.unit';
+const DEMO_PASS  = 'ejisu2026';
+
+function lsGet(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function ssGet(k){ try{ return sessionStorage.getItem(k); }catch(e){ return null; } }
+function ssSet(k, v){ try{ sessionStorage.setItem(k, v); }catch(e){} }
+function ssDel(k){ try{ sessionStorage.removeItem(k); }catch(e){} }
+function signedIn(){ return ssGet(SS_SIGNIN) === 'yes'; }
+
 let PUBLISHED = [];
 let TIMER_ID = null, T0 = null;
 const CAT_IMG = {"Public Notice":"market","Assembly Business":"meeting","Projects":"classroom",
@@ -1784,7 +1813,44 @@ ${pageHead(['Contact Us'],'Contact the Assembly','Offices, departments, the Info
 </div>`;
 
 /* ---------- STAFF DASHBOARD (admin mock) ---------- */
-PAGES['/admin'] = () => `
+PAGES['/admin'] = () => signedIn() ? adminDashboard() : loginScreen();
+
+function loginScreen(){ return `
+${pageHead(['Staff sign-in'],'Staff sign-in','Access to the content manager is restricted to authorised officers of the Assembly.')}
+<div class="wrap login-wrap">
+  <div class="login-card">
+    <div class="login-head">
+      <svg width="40" height="45" viewBox="0 0 52 58" aria-hidden="true" style="margin:0 auto">
+        <g clip-path="url(#shield)">
+          <rect width="52" height="58" fill="#14493A"/><rect y="24" width="52" height="5" fill="#B8862B"/>
+          <rect y="40" width="52" height="18" fill="#0E3629"/>
+          <path d="M26 13l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6-6.8-3.6-6.8 3.6 1.3-7.6-5.5-5.4 7.6-1.1Z" fill="#F0D9A0"/>
+        </g>
+        <path d="M26 1 50 8v25c0 12-10 20-24 24C12 53 2 45 2 33V8Z" fill="none" stroke="#B8862B" stroke-width="2"/>
+      </svg>
+      <div class="nm">Ejisu MA &middot; Content Manager</div>
+      <div class="sb">Authorised officers only</div>
+    </div>
+    <div class="login-body">
+      <div class="cred">
+        <b>Demonstration credentials</b>
+        Username <code>${DEMO_USER}</code><br>Password <code>${DEMO_PASS}</code>
+      </div>
+      <div class="err" id="loginErr" hidden></div>
+      <div class="field"><label for="lu">Username</label>
+        <input id="lu" autocomplete="off" placeholder="${DEMO_USER}"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();signIn()}"></div>
+      <div class="field"><label for="lp">Password</label>
+        <input id="lp" type="password" autocomplete="off"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();signIn()}"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="signIn()">Sign in</button>
+      <p style="font-size:.79rem;color:var(--muted);margin-top:14px;line-height:1.55">In the delivered site each officer has their own account and role, sign-in is protected by two-factor authentication, and every change is recorded against the person who made it.</p>
+    </div>
+    <div class="login-foot"><a href="#/">Return to the public website</a></div>
+  </div>
+</div>`; }
+
+function adminDashboard(){ return `
 ${pageHead(['Staff dashboard'],'The Assembly&rsquo;s side of the website','What an authorised officer sees after signing in. Everything below is live in this demonstration &mdash; publish a notice and it appears on the public News page immediately.')}
 <div class="wrap" style="padding-block:30px 20px">
   <div class="notice green"><b>This is the part that decides whether a website survives.</b> Most Assembly sites are not abandoned because they were badly built &mdash; they are abandoned because updating them needs a developer. Nothing on this screen does. Try it: write a notice, publish it, then open <a href="#/news">News &amp; Notices</a> and it will be at the top.</div>
@@ -1797,6 +1863,7 @@ ${pageHead(['Staff dashboard'],'The Assembly&rsquo;s side of the website','What 
       <div class="admin-who">
         <span>Information Unit &middot; Editor</span>
         <span class="admin-avatar">IU</span>
+        <a href="#/admin" class="signout" onclick="signOut()">Sign out</a>
       </div>
     </div>
     <div class="admin-layout">
@@ -1897,11 +1964,16 @@ ${pageHead(['Staff dashboard'],'The Assembly&rsquo;s side of the website','What 
             <p style="font-size:.85rem;color:var(--muted);margin-top:14px">Departments keep their own pages current without anyone being able to damage the rest of the site. Every change is versioned and can be rolled back.</p>
           </div>
         </div>
+
+        <div class="dangerrow">
+          <span>Notices you publish here are kept in this browser only, so the demonstration survives a refresh.</span>
+          <button class="btn btn-ghost" style="padding:7px 14px;font-size:.83rem" onclick="clearDemoData()">Clear demonstration data</button>
+        </div>
       </div>
     </div>
   </div>
   ${quickStrip(['doc','build','report','info'])}
-</div>`;
+</div>`; }
 
 /* ---------- PROPERTY RATE LOOKUP ---------- */
 PAGES['/rates'] = () => `
@@ -2040,6 +2112,37 @@ function payRate(id){
   out.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+/* ---------- staff sign-in (demonstration) ---------- */
+function signIn(){
+  const u = (document.getElementById('lu').value || '').trim().toLowerCase();
+  const p = document.getElementById('lp').value || '';
+  const err = document.getElementById('loginErr');
+  if(!u || !p){
+    err.hidden = false;
+    err.textContent = 'Enter the username and password shown above.';
+    return;
+  }
+  if(u !== DEMO_USER || p !== DEMO_PASS){
+    err.hidden = false;
+    err.textContent = 'That username and password do not match. Use the demonstration credentials shown above.';
+    document.getElementById('lp').value = '';
+    return;
+  }
+  ssSet(SS_SIGNIN, 'yes');
+  render();
+}
+
+function signOut(){
+  ssDel(SS_SIGNIN);
+  setTimeout(render, 0);
+}
+
+function clearDemoData(){
+  PUBLISHED = [];
+  lsDel(LS_NOTICES);
+  render();
+}
+
 /* ---------- notice composer ---------- */
 function startComposeTimer(){
   if(T0) return;
@@ -2073,6 +2176,7 @@ function publishNotice(){
     d: String(now.getDate()).padStart(2,'0'), m: M[now.getMonth()], y: String(now.getFullYear()),
     cat: c.replace('&amp;','&'), t: t, x: b, pri: pri, img: CAT_IMG[c.replace('&amp;','&')] || 'records', fresh: true
   });
+  lsSet(LS_NOTICES, PUBLISHED);
   if(TIMER_ID){ clearInterval(TIMER_ID); TIMER_ID = null; }
   const box = document.getElementById('timerBox');
   if(box) box.classList.remove('run');
@@ -2229,6 +2333,9 @@ function drawKente(){
   requestAnimationFrame(frame);
 }
 let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(drawKente,180); });
+
+PUBLISHED = lsGet(LS_NOTICES, []);
+if(!Array.isArray(PUBLISHED)) PUBLISHED = [];
 
 render();
 </script>
